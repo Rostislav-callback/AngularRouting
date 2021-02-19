@@ -33,6 +33,8 @@ export class SignupComponent implements OnInit {
 
   public equalValidator(control: FormGroup): ValidationErrors | null {
     const [password, repeatPassword] = Object.values(control.value);
-    return password
+    return password === repeatPassword ? null : {
+      'Password' : 'Non working'
+    }
   }
 }
