@@ -1,28 +1,39 @@
 <div class="signup_content">
-    <div class="signup_avtoriz">
+    <div class="signup_avtoriz"
+         [formGroup] = "signupForm"
+         (submit)="signup(signupForm.value)">
+
         <div class="signup_login">
             <div class="log_input-text">
                 Login
             </div>
 
-            <input class="input_log" type="text">
+            <input class="input_log" 
+                   type="text"
+                   placeholder="Username"
+                   formControlName="username"
+                   >
         </div>
 
-        <div class="signup_password">
+        <div class="signup_password"
+             formControlName="password">
             <div class="pass_text">
                 Password
             </div>
 
-            <input class="input_log" type="password" [(ngModel)]="password">
-        </div>
+            <input class="input_log" 
+                    type="text" 
+                    placeholder="Password"
+                    formControlName="password">
 
-        <div class="signup_repeat-password">
             <div class="repeat_pass-text">
                 Repeat password
             </div>
 
-            <input class="input_log" type="password" [(ngModel)]="repeatPassword">
-            
+            <input class="input_log" 
+                   type="password" 
+                   placeholder="Repeat password"
+                   formControlName="repeatPassword">         
         </div>
 
         <div class="signup_buttons">
@@ -30,8 +41,10 @@
                 Cencel
             </button>
 
-            <button class="signup_button">
-                Sign up
+            <button class="signup_button"
+                    type="submit"
+                    [disabled]="signupForm.invalid">
+                    <a [routerLink]="['/login']">Sign up</a>
             </button>
         </div>
     </div>
