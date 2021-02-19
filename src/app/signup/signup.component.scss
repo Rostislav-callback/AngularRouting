@@ -1,0 +1,75 @@
+.signup_content{
+    text-align: center;
+    margin-top: 100px;
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.signup_avtoriz {
+    height: 400px;
+    max-height: 400px;
+}
+
+.log_input-text{
+    font-size: x-large;
+    padding-bottom: 15px;
+}
+
+.signup_login{
+    padding-top: 50px;
+}
+
+.input_log {
+    height: 30px;
+    width: 300px;
+    border-radius: 5px;
+    border: .5px solid #999;
+    font-size: 20px;
+}
+
+.signup_password{
+    padding-top: 25px;
+}
+
+.pass_text{
+    font-size: x-large;
+    padding-bottom: 5px;
+}
+
+.signup_repeat-password{
+    padding-top: 25px;
+}
+
+.repeat_pass-text{
+    font-size: x-large;
+    padding-bottom: 5px
+}
+
+.signup_buttons {
+    padding-top: 40px;
+}
+
+.signup_button{
+    margin-left: 26px;
+    height: 30px;
+    width: 70px;
+    border-radius: 5px;
+}
+
+.signup_button:hover {
+    background-color: rgb(94, 230, 94);
+    border: .5px solid #999;
+}
+
+.cencel_button{
+    margin-right: 26px;
+    height: 30px;
+    width: 70px;
+    border-radius: 5px;
+}
+
+.cencel_button:hover {
+    background-color: rgb(255, 66, 66);
+    border: .5px solid #999;
+}
