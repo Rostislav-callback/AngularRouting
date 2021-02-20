@@ -24,7 +24,8 @@
             <input class="input_log" 
                     type="password" 
                     placeholder="Password"
-                    formControlName="password">
+                    formControlName="password"
+                    >
 
             <div class="repeat_pass-text">
                 Repeat password
@@ -33,7 +34,8 @@
             <input class="input_log" 
                    type="password" 
                    placeholder="Repeat password"
-                   formControlName="repeatPassword">
+                   formControlName="repeatPassword"
+                   [style.border-color]="signupForm.invalid ? 'red' : 'green'">
                    
             <div class="invalid_password-message"
                  *ngIf="signupForm.invalid">
