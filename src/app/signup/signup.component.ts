@@ -13,8 +13,7 @@ export class SignupComponent implements OnInit {
   public validators = [Validators.required];
 
   public signupForm = new FormGroup({
-    username: new FormControl ('', this.validators),
-    password: new FormControl({
+    password: new FormGroup({
       password: new FormControl('', this.validators),
       repeatPassword: new FormControl('', this.validators),
     }, {
@@ -28,7 +27,8 @@ export class SignupComponent implements OnInit {
   }
 
   public signup(FormValue: any): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
   }
 
   public equalValidator(control: FormGroup): ValidationErrors | null {

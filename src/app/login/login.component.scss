@@ -1,4 +1,4 @@
-.signup_content{
+.login_content{
     text-align: center;
     margin-top: 100px;
     width: 350px;
@@ -6,7 +6,7 @@
     margin-right: auto;
 }
 
-.signup_avtoriz {
+.login_avtoriz {
     height: 400px;
     max-height: 400px;
 }
@@ -16,7 +16,7 @@
     padding-bottom: 15px;
 }
 
-.signup_login{
+.login_login{
     padding-top: 50px;
 }
 
@@ -28,7 +28,7 @@
     font-size: 20px;
 }
 
-.signup_password{
+.login_password{
     padding-top: 25px;
 }
 
@@ -37,18 +37,18 @@
     padding-bottom: 5px;
 }
 
-.signup_buttons {
+.login_buttons {
     padding-top: 40px;
 }
 
-.signup_button{
+.login_button{
     margin-left: 26px;
     height: 30px;
     width: 70px;
     border-radius: 5px;
 }
 
-.signup_button:hover {
+.login_button:hover {
     background-color: rgb(94, 230, 94);
     border: .5px solid #999;
 }

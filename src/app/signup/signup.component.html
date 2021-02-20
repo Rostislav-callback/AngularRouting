@@ -11,18 +11,18 @@
             <input class="input_log" 
                    type="text"
                    placeholder="Username"
-                   formControlName="username"
                    >
         </div>
 
         <div class="signup_password"
-             formControlName="password">
+             formGroupName="password"
+             >
             <div class="pass_text">
                 Password
             </div>
 
             <input class="input_log" 
-                    type="text" 
+                    type="password" 
                     placeholder="Password"
                     formControlName="password">
 
@@ -33,18 +33,31 @@
             <input class="input_log" 
                    type="password" 
                    placeholder="Repeat password"
-                   formControlName="repeatPassword">         
+                   formControlName="repeatPassword">
+                   
+            <div class="invalid_password-message"
+                 *ngIf="signupForm.invalid">
+                  Password does not match.
+            </div>
+
+            <div class="valid_password-message"
+                 *ngIf="signupForm.valid">
+                  Password is valid
+            </div>
         </div>
 
         <div class="signup_buttons">
             <button class="cencel_button">
-                Cencel
+                <a [routerLink]="['/']">Cencel</a>
             </button>
 
             <button class="signup_button"
-                    type="submit"
                     [disabled]="signupForm.invalid">
-                    <a [routerLink]="['/login']">Sign up</a>
+                    <div *ngIf="signupForm.invalid">
+                        Sign up
+                    </div>
+
+                    <a class="button_a" *ngIf="signupForm.valid" [routerLink]="['/home']">Sign up</a>
             </button>
         </div>
     </div>

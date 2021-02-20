@@ -1,6 +1,6 @@
-<div class="signup_content">
-    <div class="signup_avtoriz">
-        <div class="signup_login">
+<div class="login_content">
+    <div class="login_avtoriz">
+        <div class="login_login">
             <div class="log_input-text">
                 Login
             </div>
@@ -8,7 +8,7 @@
             <input class="input_log" type="text">
         </div>
 
-        <div class="signup_password">
+        <div class="login_password">
             <div class="pass_text">
                 Password
             </div>
@@ -16,12 +16,12 @@
             <input class="input_log" type="text">
         </div>
 
-        <div class="signup_buttons">
+        <div class="login_buttons">
             <button class="cencel_button">
-                Cencel
+                <a [routerLink]="['/']">Cencel</a>
             </button>
 
-            <button class="signup_button">
+            <button class="login_button">
                 <a [routerLink]="['/home']">Log In</a>
             </button>
         </div>
