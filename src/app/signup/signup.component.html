@@ -50,16 +50,14 @@
 
         <div class="signup_buttons">
             <button class="cencel_button">
-                <a [routerLink]="['/']">Cencel</a>
+                Cencel
             </button>
 
-            <button class="signup_button"
-                    [disabled]="signupForm.invalid">
-                    <div *ngIf="signupForm.invalid">
-                        Sign up
-                    </div>
-
-                    <a class="button_a" *ngIf="signupForm.valid" [routerLink]="['/home']">Sign up</a>
+            <button class="signup_button" 
+                    [disabled]="signupForm.invalid" 
+                    [routerLink]="['/home']"
+                    >
+                    Sign up    
             </button>
         </div>
     </div>

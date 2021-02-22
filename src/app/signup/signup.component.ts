@@ -27,8 +27,7 @@ export class SignupComponent implements OnInit {
   }
 
   public signup(FormValue: any): void {
-    this.router.navigate(['/home']);
-    this.router.navigate(['/']);
+      this.router.navigate(['/home']);
   }
 
   public equalValidator(control: FormGroup): ValidationErrors | null {
