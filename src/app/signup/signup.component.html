@@ -3,14 +3,17 @@
          [formGroup] = "signupForm"
          (submit)="signup(signupForm.value)">
 
-        <div class="signup_login">
+        <div class="signup_login"
+             formGroupName="email">
             <div class="log_input-text">
                 Login
             </div>
 
             <input class="input_log" 
                    type="text"
-                   placeholder="Username"
+                   placeholder="email"
+                   formControlName="email"
+                   [style.border-color]="signupForm.get('email').invalid ? 'red' : 'green'"
                    >
         </div>
 
