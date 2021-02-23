@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
   }
 
   postEmailData(signupForm: FormGroup){
-          
+    
     return this.http.post('http://localhost:4200/home', signupForm.value); 
 }
 
@@ -55,11 +55,7 @@ export class SignupComponent implements OnInit {
     const [email] = Object.values(control.value); 
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email)) ? null : {
-      'Password' : 'Non working'
+      'Email' : 'Non working'
     }
-  }
-
-  public emailAtHome({value: email}: FormControl): ValidationErrors | null {
-    return 
   }
 }
