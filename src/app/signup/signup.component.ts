@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, ValidationErrors, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, Validators, ValidationErrors, FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
-import {HttpClient} from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +14,6 @@ export class SignupComponent implements OnInit {
   public validators = [Validators.required];
 
   public signupForm = this.fb.group({
-    //username: ['', this.validators],
     email: this.fb.group({
       email: ['', this.validators]
     }, {
@@ -35,13 +34,12 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  postEmailData(signupForm: FormGroup){
-    
-    return this.http.post('http://localhost:4200/home', signupForm.value); 
-}
+  postEmailData() {
+    return this.http.get('signupForm.value.json'); 
+  }
 
   public signup(FormValue: any): void {
-      this.router.navigate(['/home']);
+    this.signupForm.valid ? this.router.navigate(['/home']) : undefined;
   }
 
   public equalValidator(control: FormGroup): ValidationErrors | null {
