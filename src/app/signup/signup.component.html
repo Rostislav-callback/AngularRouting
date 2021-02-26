@@ -6,7 +6,7 @@
         <div class="signup_login"
              formGroupName="email">
             <div class="log_input-text">
-                Login
+                Sign Up
             </div>
 
             <input class="input_log" 
@@ -25,10 +25,9 @@
             </div>
 
             <input class="input_log" 
-                    type="password" 
-                    placeholder="Password"
-                    formControlName="password"
-                    >
+                   type="password" 
+                   placeholder="Password"
+                   formControlName="password">
 
             <div class="repeat_pass-text">
                 Repeat password
@@ -52,7 +51,8 @@
         </div>
 
         <div class="signup_buttons">
-            <button class="cencel_button">
+            <button class="cencel_button"
+                    [routerLink]="['/home']">
                 Cencel
             </button>
 
