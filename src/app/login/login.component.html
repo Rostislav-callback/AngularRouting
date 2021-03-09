@@ -15,6 +15,10 @@
                    placeholder="email"
                    formControlName="email"
                    [style.border-color]="loginForm.get('email').invalid ? 'red' : 'green'">
+                   
+            <div id="logError"
+                 *ngIf="loginForm.valid">
+            </div>
         </div>
 
         <div class="login_password"
@@ -26,7 +30,12 @@
             <input class="input_log" 
                    type="password" 
                    placeholder="Password"
-                   formControlName="password">
+                   formControlName="password"
+                   [style.border-color]="loginForm.invalid ? 'red' : 'green'">
+
+            <div>
+                Valid password
+            </div>
         </div>
 
         <div class="login_buttons">
@@ -36,8 +45,10 @@
             </button>
 
             <button class="login_button"
+                    [disabled]="loginForm.invalid"
                     [routerLink]="['/home']"
-                    [disabled]="loginForm.invalid">
+                    (click)="confirmLoginData()"
+                    >
                 Log In
             </button>
         </div>
