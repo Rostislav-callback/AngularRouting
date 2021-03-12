@@ -45,7 +45,7 @@
                    type="password" 
                    placeholder="Repeat password"
                    formControlName="repeatPassword"
-                   [style.border-color]="signupForm.invalid ? 'red' : 'green'">
+                   [ngClass]="{'red': email.invalid && (email.dirty || email.touched) || (isResponseError$ | async)}">
                    
             <div class="invalid_password-message"
                  *ngIf="signupForm.invalid">

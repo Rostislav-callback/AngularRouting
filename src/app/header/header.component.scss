@@ -58,4 +58,17 @@ a:hover {
 
 .menu_sign-item:hover{
     border-bottom: 2px solid #000000;
+
+}
+
+.button_sign-up {
+    &.invis {
+        display: none;
+    }
+}
+
+.button_log-in {
+    &.invis {
+        display: none;
+    }
 }

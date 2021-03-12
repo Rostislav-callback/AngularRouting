@@ -1,4 +1,4 @@
-<div class="menu">
+<form class="menu">
     <ul class="menu_list">
         <li class="menu_list-item">
             <a routerLink="">Header</a>
@@ -13,11 +13,22 @@
             <a routerLink="about-us">About Us</a>
         </li>
         <li class="menu_log-item">
-            <a routerLink="login">Log In</a>
+            <div class="button_log-in"
+                [ngClass]="{'invis': isResponse$ | async}">
+                <a routerLink="login">Log In</a>
+            </div>
         </li>
+
         <li class="menu_sign-item">
-            <a routerLink="signup">Sign Up</a>
+            <div class="button_sign-up" 
+                [ngClass]="{'invis': isResponse$ | async}">
+                <a routerLink="signup">Sign Up</a>
+            </div>
+            
+            <div *ngIf="isResponse$ | async">
+                <a (click)="logoutChange()">Log Out</a>
+            </div>
         </li>
     </ul>
-</div>
+</form>
 

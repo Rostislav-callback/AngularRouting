@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, ValidationErrors, FormBuilder} from '@angular/forms';
 
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
-import { AuthService } from './../auth/services/auth.service'
-import { Signup } from '../auth/interfaces/signup.interface';
+import { AuthService } from '../services/auth.service';
+import { Signup } from '../interfaces/signup.interface';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +16,7 @@ export class SignupComponent implements OnInit {
 
   public validators = [Validators.required];
   public errorEmailMessage = 'This email is exists!';
-  public isResponseError$: Subject<boolean>;
+  public isResponseError$: BehaviorSubject<boolean>;
 
   public signupForm: FormGroup;
 
@@ -70,5 +70,4 @@ export class SignupComponent implements OnInit {
       validators: [this.equalValidator]
     });
   }
-
 }
