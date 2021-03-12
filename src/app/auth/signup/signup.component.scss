@@ -1,4 +1,4 @@
-.login_content{
+.signup_content{
     text-align: center;
     margin-top: 100px;
     width: 350px;
@@ -6,7 +6,7 @@
     margin-right: auto;
 }
 
-.login_avtoriz {
+.signup_avtoriz {
     height: 400px;
     max-height: 400px;
 }
@@ -16,7 +16,7 @@
     padding-bottom: 15px;
 }
 
-.login_login{
+.signup_login{
     padding-top: 50px;
 }
 
@@ -26,30 +26,37 @@
     border-radius: 5px;
     border: .5px solid #999;
     font-size: 20px;
-}
 
-.login_password{
-    padding-top: 25px;
+    &.red {
+        border: 1px solid red;
+    }
 }
 
 .pass_text{
     font-size: x-large;
     padding-bottom: 5px;
+    padding-top: 25px;
 }
 
-.login_buttons {
+.repeat_pass-text{
+    font-size: x-large;
+    padding-bottom: 5px;
+    padding-top: 25px;
+}
+
+.signup_buttons {
     padding-top: 40px;
 }
 
-.login_button{
+.signup_button{
     margin-left: 26px;
     height: 30px;
     width: 70px;
     border-radius: 5px;
 }
 
-.login_button:hover {
-    background-color: rgb(94, 230, 94);
+.signup_button:hover {
+    background-color: rgb(235, 235, 235);
     border: .5px solid #999;
 }
 
@@ -61,11 +68,29 @@
 }
 
 .cencel_button:hover {
-    background-color: rgb(255, 66, 66);
+    background-color: rgb(235, 235, 235);
     border: .5px solid #999;
 }
 
 a {
     text-decoration: none;
     color: #000000;
+}
+
+.invalid_email-message {
+    text-align: left;
+    padding-left: 25px;
+    color: rgb(255, 47, 47);
+}
+
+.invalid_password-message {
+    text-align: left;
+    padding-left: 25px;
+    color: rgb(255, 47, 47);
+}
+
+.valid_password-message {
+    text-align: left;
+    padding-left: 25px;
+    color: rgb(64, 253, 47);
 }

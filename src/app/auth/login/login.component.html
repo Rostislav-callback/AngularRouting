@@ -1,0 +1,66 @@
+<div class="login_content">
+    <form class="login_avtoriz"
+         [formGroup] = "loginForm"
+         (ngSubmit)="confirmLoginData()">
+
+        <div class="login_login">
+
+            <div class="log_input-text">
+                Login
+            </div>
+
+            <input class="input_log" 
+                   type="text"
+                   placeholder="email"
+                   formControlName="email"
+                   [ngClass]="{'red': emailLogin.invalid && (emailLogin.dirty || emailLogin.touched) || (isResponseError$ | async)}">
+                   
+            <div class="invalid_email-message">
+                <div *ngIf="(isResponseError$ | async) && emailLogin.dirty">
+                    {{loginError}} 
+                </div>
+
+                <div *ngIf="emailLogin.invalid">
+                    Invalid email 
+                </div>
+
+                <div *ngIf="emailLogin.valid || (emailLogin.untouched && emailLogin.pristine)">
+                 
+                </div>
+            </div>
+        </div>
+
+        <div class="login_password">
+            <div class="pass_text">
+                Password
+            </div>
+
+            <input class="input_log" 
+                   type="password" 
+                   placeholder="Password"
+                   formControlName="password"
+                   [ngClass]="{'red': (isResponseError$ | async)}">
+
+            <div class="invalid_password-message"
+                 *ngIf="emailLogin.invalid && (isResponseError$ | async) || emailLogin.dirty">
+                <div *ngIf="(isResponseError$ | async)">
+                    {{passwordError}}
+                </div>
+            </div>
+        </div>
+
+        <div class="login_buttons">
+            <button class="cencel_button"
+                    [routerLink]="['/home']">
+                Cencel
+            </button>
+
+            <button class="login_button"
+                    [disabled]="loginForm.invalid"
+                    type="submit"
+                    >
+                Log In
+            </button>
+        </div>
+    </form>
+</div>
