@@ -19,24 +19,26 @@ export class LoginComponent implements OnInit {
   public passwordError = 'Invalid password';
 
   public isResponseError$: BehaviorSubject<boolean>;
+  public isResponse$: BehaviorSubject<boolean>;
 
   
   public loginForm: FormGroup;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService) {    
-    this.isResponseError$ = this.authService.isResponseError$;        
+    this.isResponseError$ = this.authService.isResponseError$; 
+    this.isResponse$ = this.authService.isResponse$;       
   }
 
   ngOnInit(): void {
-    this.initLoginForm();
+    this.initLoginForm()
   }
 
   get emailLogin() {
     return this.loginForm.get('email');
   }
 
-  confirmLoginData() {
+  public confirmLoginData() {
     const loginDataObject: Login = { 
       "email": this.loginForm.value.email, 
       "password": this.loginForm.value.password
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.signin(loginDataObject);
   }
+
 
   public emailLoginValidator(control: FormGroup): ValidationErrors | null {
     const [email] = Object.values(control.value); 

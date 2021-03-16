@@ -16,11 +16,11 @@
                    [ngClass]="{'red': emailLogin.invalid && (emailLogin.dirty || emailLogin.touched) || (isResponseError$ | async)}">
                    
             <div class="invalid_email-message">
-                <div *ngIf="(isResponseError$ | async) && emailLogin.dirty">
+                <div *ngIf="(isResponseError$ | async)">
                     {{loginError}} 
                 </div>
 
-                <div *ngIf="emailLogin.invalid">
+                <div *ngIf="emailLogin.invalid && (emailLogin.dirty || emailLogin.touched)">
                     Invalid email 
                 </div>
 
@@ -57,8 +57,7 @@
 
             <button class="login_button"
                     [disabled]="loginForm.invalid"
-                    type="submit"
-                    >
+                    type="submit">
                 Log In
             </button>
         </div>

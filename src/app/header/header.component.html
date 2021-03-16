@@ -26,7 +26,8 @@
             </div>
             
             <div *ngIf="isResponse$ | async">
-                <a (click)="logoutChange()">Log Out</a>
+                <a (click)="logoutChange()"
+                    routerLink="login">Log Out</a>
             </div>
         </li>
     </ul>

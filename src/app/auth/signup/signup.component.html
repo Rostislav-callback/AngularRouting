@@ -45,10 +45,10 @@
                    type="password" 
                    placeholder="Repeat password"
                    formControlName="repeatPassword"
-                   [ngClass]="{'red': email.invalid && (email.dirty || email.touched) || (isResponseError$ | async)}">
+                   [ngClass]="{'red': email.invalid && (email.dirty || email.touched)}">
                    
             <div class="invalid_password-message"
-                 *ngIf="signupForm.invalid">
+                 *ngIf="(isResponseError$ | async) && email.invalid">
                   Password does not match.
             </div>
 
