@@ -15,8 +15,6 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
 
   public validators = [Validators.required];
-  public loginError = 'User not found, please sign up';
-  public passwordError = 'Invalid password';
 
   public isResponseError$: BehaviorSubject<boolean>;
   public isResponse$: BehaviorSubject<boolean>;
@@ -38,6 +36,10 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('email');
   }
 
+  get password() {
+    return this.loginForm.get('password');
+  }
+
   confirmLoginData() {
     const loginDataObject: Login = { 
       "email": this.loginForm.value.email, 
@@ -45,15 +47,6 @@ export class LoginComponent implements OnInit {
     };
 
     this.authService.signin(loginDataObject);
-  }
-
-
-  public emailLoginValidator(control: FormGroup): ValidationErrors | null {
-    const [email] = Object.values(control.value); 
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email)) ? null : {
-      'Email' : 'Non working'
-    }
   }
 
   private initLoginForm() {

@@ -40,7 +40,6 @@ export class AuthService {
                 data.push(usersDataObject);
             
                 localStorage.setItem('User', JSON.stringify(data));
-
                 localStorage.setItem('isAuth', 'true');
 
                 this.toastr.success('Compleate!', 'Sign Up');

@@ -13,16 +13,22 @@
                    placeholder="email"
                    formControlName="email"
                    autocomplete="off"
-                   [ngClass]="{'red': email.invalid && (isResponseError$ | async) || (email.dirty || email.touched)}">
+                   [ngClass]="{'red': email.invalid || (isResponseError$ | async) || (email.dirty || email.touched),
+                               'green': email.valid && !(isResponseError$ | async)}">
 
             <div class="invalid_email-message">
-                <div *ngIf="(isResponseError$ | async)">
-                    {{errorEmailMessage}}
+                <div *ngIf="(isResponseError$ | async) && email.touched && email.valid">
+                    This email is exists!
                 </div>
 
                 <div *ngIf="email.invalid && (email.dirty || email.touched)">
-                    Email is required
+                    Email is required!
                 </div>
+            </div>
+
+            <div class="valid_email-message" 
+                *ngIf="email.valid && !(isResponseError$ | async)">
+                Valid email
             </div>
         </div>
 
@@ -48,15 +54,16 @@
                    placeholder="Repeat password"
                    formControlName="repeatPassword"
                    autocomplete="off"
-                   [ngClass]="{'red': password.invalid && (password.dirty || password.touched)}">
+                   [ngClass]="{'red': (isResponseError$ | async) || (repeatPassword.dirty || repeatPassword.touched),
+                               'green': signupForm.valid && !(isResponseError$ | async) && repeatPassword.valid}">
                    
             <div class="invalid_password-message"
-                 *ngIf="(isResponseError$ | async) && password.invalid">
+                 *ngIf="((isResponseError$ | async) && repeatPassword.valid) || (signupForm.invalid && repeatPassword.valid)">
                   Password does not match.
             </div>
 
             <div class="valid_password-message"
-                 *ngIf="signupForm.valid">
+                 *ngIf="signupForm.valid && repeatPassword.valid && !(isResponseError$ | async)">
                   Password is valid
             </div>
         </div>

@@ -15,8 +15,8 @@ import { Signup } from '../interfaces/signup.interface';
 export class SignupComponent implements OnInit {
 
   public validators = [Validators.required];
-  public errorEmailMessage = 'This email is exists!';
   public isResponseError$: BehaviorSubject<boolean>;
+  public isResponse$: BehaviorSubject<boolean>;
 
   public signupForm: FormGroup;
 
@@ -33,7 +33,7 @@ export class SignupComponent implements OnInit {
     return this.signupForm.get('email');
   }
 
-  get password() {
+  get repeatPassword() {
     return this.signupForm.get('repeatPassword');
   }
 
@@ -53,21 +53,12 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  public emailValidator(control: FormGroup): ValidationErrors | null {
-    const [email] = Object.values(control.value); 
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    
-    return re.test(String(email)) ? null : {
-      'Email' : 'Non working'
-    }
-  }
-
   private initForm() {
     this.signupForm = this.fb.group({
       email: ['', Validators.compose([
         Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{1,9})+$'),
         Validators.required
-    ])], 
+    ])],
       password: ['', ...this.validators],
       repeatPassword: ['', ...this.validators]
     }, {
