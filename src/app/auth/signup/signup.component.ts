@@ -33,6 +33,10 @@ export class SignupComponent implements OnInit {
     return this.signupForm.get('email');
   }
 
+  get password() {
+    return this.signupForm.get('repeatPassword');
+  }
+
   public setUserData() {
     const usersDataObject: Signup = { 
       "email":  this.signupForm.value.email,

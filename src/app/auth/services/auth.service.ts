@@ -2,12 +2,11 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 
-import { Subject } from "rxjs";
 import { BehaviorSubject } from "rxjs";
+import { ToastrService } from 'ngx-toastr';
 
 import { Signup } from "./../interfaces/signup.interface";
 import { Login } from "./../interfaces/login.interface";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +16,8 @@ export class AuthService {
     public isResponseError$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     public isResponse$: BehaviorSubject<boolean> = new BehaviorSubject(this.isAuth());
 
-    constructor(private router: Router) {
+    constructor(private router: Router,
+                private toastr: ToastrService) {
 
     }
 
@@ -26,6 +26,8 @@ export class AuthService {
 
         if (localStorage.getItem('User') == null) {
             localStorage.setItem('User', JSON.stringify(userData));
+
+            this.toastr.success('New user added!', 'Sign Up');
         } else {
             let data = JSON.parse(localStorage.getItem('User'));
 
@@ -33,6 +35,7 @@ export class AuthService {
 
             if (findUser) {
                 this.isResponseError$.next(true);
+                this.toastr.error('Error!', 'Sign Up');
                  
             } else {
                 data.push(usersDataObject);
@@ -40,6 +43,8 @@ export class AuthService {
                 localStorage.setItem('User', JSON.stringify(data));
 
                 localStorage.setItem('isAuth', 'true');
+
+                this.toastr.success('Compleate!', 'Sign Up');
 
                 this.isResponse$.next(true);
 
@@ -53,8 +58,8 @@ export class AuthService {
         const loginData = [];                   
 
         if (localStorage.getItem('User') == null) {
-            console.log('User not found, please sign up')
             this.isResponseError$.next(true);
+            this.toastr.error('User not found!', 'Sign Up');
             
         } else {
             let login = JSON.parse(localStorage.getItem('User'));
@@ -69,11 +74,15 @@ export class AuthService {
 
                 this.isResponse$.next(true);
 
+                this.toastr.success('Compleate!', 'Log In');
+
                 localStorage.setItem('isAuth', 'true');
 
             } else {
                 this.isResponseError$.next(true);
                 this.isResponse$.next(false);
+
+                this.toastr.error('Required user!', 'Sign Up');
             }
         }
     }

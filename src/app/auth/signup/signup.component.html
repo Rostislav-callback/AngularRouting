@@ -12,9 +12,9 @@
                    type="text"
                    placeholder="email"
                    formControlName="email"
-                   [ngClass]="{'red': email.invalid && (email.dirty || email.touched) || (isResponseError$ | async)}">
+                   [ngClass]="{'red': email.invalid || (isResponseError$ | async) || (email.dirty || email.touched)}">
 
-            <div class="invalid_email-message" *ngIf="email.invalid || (isResponseError$ | async) || (email.dirty || email.touched)">
+            <div class="invalid_email-message">
                 <div *ngIf="(isResponseError$ | async)">
                     {{errorEmailMessage}}
                 </div>
@@ -45,10 +45,10 @@
                    type="password" 
                    placeholder="Repeat password"
                    formControlName="repeatPassword"
-                   [ngClass]="{'red': email.invalid && (email.dirty || email.touched)}">
+                   [ngClass]="{'red': password.invalid && (password.dirty || password.touched)}">
                    
             <div class="invalid_password-message"
-                 *ngIf="(isResponseError$ | async) && email.invalid">
+                 *ngIf="(isResponseError$ | async) && password.invalid">
                   Password does not match.
             </div>
 
@@ -72,5 +72,3 @@
         </div>
     </form>
 </div>
-
-<!--[routerLink]="['/home']"-->
