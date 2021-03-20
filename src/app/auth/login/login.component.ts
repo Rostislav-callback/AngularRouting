@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, Validators, ValidationErrors, FormBuilder} from '@angular/forms';
 
@@ -31,14 +31,14 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initLoginForm()
+    this.initLoginForm();
   }
 
   get emailLogin() {
     return this.loginForm.get('email');
   }
 
-  public confirmLoginData() {
+  confirmLoginData() {
     const loginDataObject: Login = { 
       "email": this.loginForm.value.email, 
       "password": this.loginForm.value.password

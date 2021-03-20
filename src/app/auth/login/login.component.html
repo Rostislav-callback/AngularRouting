@@ -13,6 +13,7 @@
                    type="text"
                    placeholder="email"
                    formControlName="email"
+                   autocomplete="off"
                    [ngClass]="{'red': emailLogin.invalid && (emailLogin.dirty || emailLogin.touched) || (isResponseError$ | async)}">
                    
             <div class="invalid_email-message">
@@ -39,6 +40,7 @@
                    type="password" 
                    placeholder="Password"
                    formControlName="password"
+                   autocomplete="off"
                    [ngClass]="{'red': (isResponseError$ | async)}">
 
             <div class="invalid_password-message"

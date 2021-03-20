@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
 
 import { BehaviorSubject } from "rxjs";
 import { ToastrService } from 'ngx-toastr';
@@ -88,8 +87,8 @@ export class AuthService {
     }
 
     logout() {
-        console.log('exit');
         this.isResponse$.next(false);
+
         localStorage.setItem('isAuth', 'false');
         localStorage.removeItem('isAuth');
     }
