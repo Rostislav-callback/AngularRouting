@@ -1,7 +1,7 @@
 <div class="signup_content">
     <form class="signup_avtoriz"
-         [formGroup] = "signupForm"
-         (ngSubmit)="setUserData()">
+          [formGroup] = "signupForm"
+          (ngSubmit)="setUserData()">
 
         <div class="signup_login">
             <div class="log_input-text">
@@ -10,6 +10,7 @@
 
             <input class="input_log" 
                    type="text"
+                   id="email"
                    placeholder="email"
                    formControlName="email"
                    autocomplete="off"
@@ -17,11 +18,11 @@
                                'green': email.valid && !(isResponseError$ | async)}">
 
             <div class="invalid_email-message">
-                <div *ngIf="(isResponseError$ | async) && email.touched && email.valid">
+                <div *ngIf="(isResponseError$ | async) && email.valid">
                     This email is exists!
                 </div>
 
-                <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                <div *ngIf="email.invalid && (email.dirty || email.touched) && !(isResponseError$ | async)">
                     Email is required!
                 </div>
             </div>
@@ -33,8 +34,7 @@
         </div>
 
 
-        <div class="signup_password">
-             
+        <div class="signup_password">  
             <div class="pass_text">
                 Password
             </div>
@@ -58,12 +58,12 @@
                                'green': signupForm.valid && !(isResponseError$ | async) && repeatPassword.valid}">
                    
             <div class="invalid_password-message"
-                 *ngIf="((isResponseError$ | async) && repeatPassword.valid) || (signupForm.invalid && repeatPassword.valid)">
+                 *ngIf="signupForm.invalid && repeatPassword.valid">
                   Password does not match.
             </div>
 
             <div class="valid_password-message"
-                 *ngIf="signupForm.valid && repeatPassword.valid && !(isResponseError$ | async)">
+                 *ngIf="signupForm.valid && !(isResponseError$ | async)">
                   Password is valid
             </div>
         </div>

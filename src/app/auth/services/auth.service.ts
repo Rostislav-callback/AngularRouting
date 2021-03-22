@@ -26,7 +26,7 @@ export class AuthService {
         if (localStorage.getItem('User') == null) {
             localStorage.setItem('User', JSON.stringify(userData));
 
-            this.toastr.success('New user added!', 'Sign Up');
+            this.toastr.success('You are added!', 'Sign Up');
         } else {
             let data = JSON.parse(localStorage.getItem('User'));
 
@@ -78,6 +78,7 @@ export class AuthService {
 
             } else {
                 this.isResponseError$.next(true);
+                
                 this.isResponse$.next(false);
 
                 this.toastr.error('Required user!', 'Sign Up');

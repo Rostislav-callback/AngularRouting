@@ -14,15 +14,15 @@
                    placeholder="email"
                    formControlName="email"
                    autocomplete="off"
-                   [ngClass]="{'red': emailLogin.invalid && (emailLogin.dirty || emailLogin.touched) || (isResponseError$ | async),
+                   [ngClass]="{'red': (emailLogin.dirty || emailLogin.touched) || (isResponseError$ | async),
                                'green': emailLogin.valid && !(isResponseError$ | async)}">
                    
             <div class="invalid_email-message">
-                <div *ngIf="(isResponseError$ | async)">
+                <div *ngIf="(isResponseError$ | async) && emailLogin.valid">
                     User not found, please sign up! 
                 </div>
 
-                <div *ngIf="emailLogin.invalid && (emailLogin.dirty && emailLogin.touched) && !(isResponseError$ | async)">
+                <div *ngIf="emailLogin.invalid && (emailLogin.dirty || emailLogin.touched) && !(isResponseError$ | async)">
                     Email is required! 
                 </div>
             </div>
@@ -47,10 +47,8 @@
                                'green': !(isResponseError$ | async) && password.valid}">
 
             <div class="invalid_password-message"
-                 *ngIf="(emailLogin.invalid && (isResponseError$ | async) || emailLogin.dirty) && password.valid">
-                <div *ngIf="(isResponseError$ | async)">
+                 *ngIf="(isResponseError$ | async) && password.valid">               
                     Invalid password
-                </div>
             </div>
         </div>
 

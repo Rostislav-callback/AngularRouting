@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormGroup, Validators, ValidationErrors, FormBuilder} from '@angular/forms';
 
 import { BehaviorSubject } from 'rxjs';
@@ -45,7 +44,7 @@ export class LoginComponent implements OnInit {
       "email": this.loginForm.value.email, 
       "password": this.loginForm.value.password
     };
-
+      
     this.authService.signin(loginDataObject);
   }
 

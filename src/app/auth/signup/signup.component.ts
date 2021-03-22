@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormGroup, Validators, ValidationErrors, FormBuilder} from '@angular/forms';
 
 import { BehaviorSubject } from 'rxjs';
@@ -37,7 +37,7 @@ export class SignupComponent implements OnInit {
     return this.signupForm.get('repeatPassword');
   }
 
-  public setUserData() {
+  setUserData() {
     const usersDataObject: Signup = { 
       "email":  this.signupForm.value.email,
       "password":  this.signupForm.value.password
@@ -48,6 +48,7 @@ export class SignupComponent implements OnInit {
 
   public equalValidator(control: FormGroup): ValidationErrors | null {
     const [, password, repeatPassword] = Object.values(control.value);
+
     return password === repeatPassword ? null : {
       'Password' : 'Non working'
     }

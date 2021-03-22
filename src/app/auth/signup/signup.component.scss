@@ -97,6 +97,10 @@ a {
     text-align: left;
     padding-left: 25px;
     color: rgb(255, 47, 47);
+
+    &.inviz {
+        display: none;
+    }
 }
 
 .valid_password-message {
