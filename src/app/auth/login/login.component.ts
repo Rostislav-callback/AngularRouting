@@ -1,5 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, ValidationErrors, FormBuilder} from '@angular/forms';
 
 import { BehaviorSubject } from 'rxjs';
@@ -15,17 +14,17 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
 
   public validators = [Validators.required];
-  public loginError = 'User not found, please sign up';
-  public passwordError = 'Invalid password';
 
   public isResponseError$: BehaviorSubject<boolean>;
+  public isResponse$: BehaviorSubject<boolean>;
 
   
   public loginForm: FormGroup;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService) {    
-    this.isResponseError$ = this.authService.isResponseError$;        
+    this.isResponseError$ = this.authService.isResponseError$; 
+    this.isResponse$ = this.authService.isResponse$;       
   }
 
   ngOnInit(): void {
@@ -36,21 +35,17 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('email');
   }
 
+  get password() {
+    return this.loginForm.get('password');
+  }
+
   confirmLoginData() {
     const loginDataObject: Login = { 
       "email": this.loginForm.value.email, 
       "password": this.loginForm.value.password
     };
-
+      
     this.authService.signin(loginDataObject);
-  }
-
-  public emailLoginValidator(control: FormGroup): ValidationErrors | null {
-    const [email] = Object.values(control.value); 
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email)) ? null : {
-      'Email' : 'Non working'
-    }
   }
 
   private initLoginForm() {

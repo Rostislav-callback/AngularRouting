@@ -30,6 +30,10 @@
     &.red {
         border: 1px solid red;
     }
+
+    &.green {
+        border: 1px solid green;
+    }
 }
 
 .pass_text{
@@ -83,10 +87,20 @@ a {
     color: rgb(255, 47, 47);
 }
 
+.valid_email-message {
+    text-align: left;
+    padding-left: 25px;
+    color: rgb(64, 253, 47);
+}
+
 .invalid_password-message {
     text-align: left;
     padding-left: 25px;
     color: rgb(255, 47, 47);
+
+    &.inviz {
+        display: none;
+    }
 }
 
 .valid_password-message {

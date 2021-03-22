@@ -13,20 +13,23 @@
                    type="text"
                    placeholder="email"
                    formControlName="email"
-                   [ngClass]="{'red': emailLogin.invalid && (emailLogin.dirty || emailLogin.touched) || (isResponseError$ | async)}">
+                   autocomplete="off"
+                   [ngClass]="{'red': (emailLogin.dirty || emailLogin.touched) || (isResponseError$ | async),
+                               'green': emailLogin.valid && !(isResponseError$ | async)}">
                    
             <div class="invalid_email-message">
-                <div *ngIf="(isResponseError$ | async) && emailLogin.dirty">
-                    {{loginError}} 
+                <div *ngIf="(isResponseError$ | async) && emailLogin.valid">
+                    User not found, please sign up! 
                 </div>
 
-                <div *ngIf="emailLogin.invalid">
-                    Invalid email 
+                <div *ngIf="emailLogin.invalid && (emailLogin.dirty || emailLogin.touched) && !(isResponseError$ | async)">
+                    Email is required! 
                 </div>
+            </div>
 
-                <div *ngIf="emailLogin.valid || (emailLogin.untouched && emailLogin.pristine)">
-                 
-                </div>
+            <div class="valid_email-message" 
+                *ngIf="emailLogin.valid && !(isResponseError$ | async)">
+                Valid email
             </div>
         </div>
 
@@ -39,13 +42,13 @@
                    type="password" 
                    placeholder="Password"
                    formControlName="password"
-                   [ngClass]="{'red': (isResponseError$ | async)}">
+                   autocomplete="off"
+                   [ngClass]="{'red': (isResponseError$ | async),
+                               'green': !(isResponseError$ | async) && password.valid}">
 
             <div class="invalid_password-message"
-                 *ngIf="emailLogin.invalid && (isResponseError$ | async) || emailLogin.dirty">
-                <div *ngIf="(isResponseError$ | async)">
-                    {{passwordError}}
-                </div>
+                 *ngIf="(isResponseError$ | async) && password.valid">               
+                    Invalid password
             </div>
         </div>
 
@@ -57,8 +60,7 @@
 
             <button class="login_button"
                     [disabled]="loginForm.invalid"
-                    type="submit"
-                    >
+                    type="submit">
                 Log In
             </button>
         </div>

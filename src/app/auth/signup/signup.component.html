@@ -1,7 +1,7 @@
 <div class="signup_content">
     <form class="signup_avtoriz"
-         [formGroup] = "signupForm"
-         (ngSubmit)="setUserData()">
+          [formGroup] = "signupForm"
+          (ngSubmit)="setUserData()">
 
         <div class="signup_login">
             <div class="log_input-text">
@@ -10,24 +10,31 @@
 
             <input class="input_log" 
                    type="text"
+                   id="email"
                    placeholder="email"
                    formControlName="email"
-                   [ngClass]="{'red': email.invalid && (email.dirty || email.touched) || (isResponseError$ | async)}">
+                   autocomplete="off"
+                   [ngClass]="{'red': email.invalid || (isResponseError$ | async) || (email.dirty || email.touched),
+                               'green': email.valid && !(isResponseError$ | async)}">
 
-            <div class="invalid_email-message" *ngIf="email.invalid || (isResponseError$ | async) || (email.dirty || email.touched)">
-                <div *ngIf="(isResponseError$ | async)">
-                    {{errorEmailMessage}}
+            <div class="invalid_email-message">
+                <div *ngIf="(isResponseError$ | async) && email.valid">
+                    This email is exists!
                 </div>
 
-                <div *ngIf="email.invalid && (email.dirty || email.touched)">
-                    Email is required
+                <div *ngIf="email.invalid && (email.dirty || email.touched) && !(isResponseError$ | async)">
+                    Email is required!
                 </div>
+            </div>
+
+            <div class="valid_email-message" 
+                *ngIf="email.valid && !(isResponseError$ | async)">
+                Valid email
             </div>
         </div>
 
 
-        <div class="signup_password">
-             
+        <div class="signup_password">  
             <div class="pass_text">
                 Password
             </div>
@@ -35,7 +42,8 @@
             <input class="input_log" 
                    type="password" 
                    placeholder="Password"
-                   formControlName="password">
+                   formControlName="password"
+                   autocomplete="off">
 
             <div class="repeat_pass-text">
                 Repeat password
@@ -45,15 +53,17 @@
                    type="password" 
                    placeholder="Repeat password"
                    formControlName="repeatPassword"
-                   [ngClass]="{'red': email.invalid && (email.dirty || email.touched) || (isResponseError$ | async)}">
+                   autocomplete="off"
+                   [ngClass]="{'red': (isResponseError$ | async) || (repeatPassword.dirty || repeatPassword.touched),
+                               'green': signupForm.valid && !(isResponseError$ | async) && repeatPassword.valid}">
                    
             <div class="invalid_password-message"
-                 *ngIf="signupForm.invalid">
+                 *ngIf="signupForm.invalid && repeatPassword.valid">
                   Password does not match.
             </div>
 
             <div class="valid_password-message"
-                 *ngIf="signupForm.valid">
+                 *ngIf="signupForm.valid && !(isResponseError$ | async)">
                   Password is valid
             </div>
         </div>
@@ -72,5 +82,3 @@
         </div>
     </form>
 </div>
-
-<!--[routerLink]="['/home']"-->

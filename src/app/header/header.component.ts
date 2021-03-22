@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { AuthService } from '../auth/services/auth.service';
-import { Login } from "../auth/interfaces/login.interface";
-import { Signup } from '../auth/interfaces/signup.interface';
 
 @Component({
   selector: 'app-header',
