@@ -13,7 +13,7 @@
                    type="text"
                    placeholder="email"
                    formControlName="email"
-                   autocomplete="off"
+                   (input)="changeState($event.target.value)"
                    [ngClass]="{'red': (emailLogin.dirty || emailLogin.touched) || (isResponseError$ | async),
                                'green': emailLogin.valid && !(isResponseError$ | async)}">
                    
@@ -42,7 +42,6 @@
                    type="password" 
                    placeholder="Password"
                    formControlName="password"
-                   autocomplete="off"
                    [ngClass]="{'red': (isResponseError$ | async),
                                'green': !(isResponseError$ | async) && password.valid}">
 

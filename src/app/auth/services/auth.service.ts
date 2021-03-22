@@ -47,7 +47,6 @@ export class AuthService {
                 this.isResponse$.next(true);
 
                 this.router.navigate(['/home']);
-          
             }
         }
     }
