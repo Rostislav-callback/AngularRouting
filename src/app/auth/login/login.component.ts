@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder} from '@angular/forms';
 import { Router } from "@angular/router";
 
 import { BehaviorSubject } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { Login } from "./../interfaces/login.interface";
 import { AuthService } from '../services/auth.service';
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   public isResponseError$: BehaviorSubject<boolean>;
   public isResponse$: BehaviorSubject<boolean>;
-
+  private subscription: Subscription;
   
   public loginForm: FormGroup;
 
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
     this.isResponseError$ = this.authService.isResponseError$; 
     this.isResponse$ = this.authService.isResponse$;   
     
-    router.events.subscribe(event => {
+    this.subscription = router.events.subscribe(event => {
       if (event.constructor.name === 'NavigationStart') {
         this.isResponseError$.next(false);
       }
@@ -37,6 +38,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.initLoginForm();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   get emailLogin() {
