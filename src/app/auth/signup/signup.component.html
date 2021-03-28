@@ -18,7 +18,7 @@
                    placeholder="email"
                    formControlName="email"
                    (input)="changeState($event.target.value)"
-                   [ngClass]="{'red': email.invalid || (isResponseError$ | async) || (email.dirty || email.touched),
+                   [ngClass]="{'red': (isResponseError$ | async) || (email.dirty || email.touched),
                                'green': email.valid && !(isResponseError$ | async)}">
 
             <div class="invalid_email-message">
