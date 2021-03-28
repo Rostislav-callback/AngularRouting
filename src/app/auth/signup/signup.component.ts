@@ -1,7 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, Validators, ValidationErrors, FormBuilder} from '@angular/forms';
+import { Router } from "@angular/router";
 
 import { BehaviorSubject } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 import { Signup } from '../interfaces/signup.interface';
@@ -17,12 +19,20 @@ export class SignupComponent implements OnInit {
   public validators = [Validators.required];
   public isResponseError$: BehaviorSubject<boolean>;
   public isResponse$: BehaviorSubject<boolean>;
+  private subscription: Subscription;
 
   public signupForm: FormGroup;
 
   constructor(private fb: FormBuilder,
+              private router: Router,
               private authService: AuthService) {
     this.isResponseError$ = this.authService.isResponseError$;
+
+    this.subscription = this.router.events.subscribe(event => {
+      if (event.constructor.name === 'NavigationStart') {
+        this.isResponseError$.next(false);
+      } 
+    });
   }
 
   ngOnInit() {
@@ -46,6 +56,13 @@ export class SignupComponent implements OnInit {
     this.authService.signup(usersDataObject);
   }
 
+  changeState(data) {
+    let userData = data;
+    if (userData === "" && this.signupForm.untouched) {
+      this.isResponseError$.next(false);
+    }
+  }
+
   public equalValidator(control: FormGroup): ValidationErrors | null {
     const [, password, repeatPassword] = Object.values(control.value);
 
@@ -65,5 +82,9 @@ export class SignupComponent implements OnInit {
     }, {
       validators: [this.equalValidator]
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

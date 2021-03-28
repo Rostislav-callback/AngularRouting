@@ -24,8 +24,12 @@ export class AuthService {
         const userData = [];
 
         if (localStorage.getItem('User') == null) {
-            localStorage.setItem('User', JSON.stringify(userData));
+            userData.push(usersDataObject);
 
+            localStorage.setItem('User', JSON.stringify(userData));
+            localStorage.setItem('isAuth', 'true');
+
+            this.router.navigate(['/home']);
             this.toastr.success('You are added!', 'Sign Up');
         } else {
             let data = JSON.parse(localStorage.getItem('User'));
@@ -47,7 +51,6 @@ export class AuthService {
                 this.isResponse$.next(true);
 
                 this.router.navigate(['/home']);
-          
             }
         }
     }

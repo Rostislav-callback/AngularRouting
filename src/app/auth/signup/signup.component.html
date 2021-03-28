@@ -10,11 +10,15 @@
 
             <input class="input_log" 
                    type="text"
-                   id="email"
+                   readonly 
+                   onfocus="if (this.hasAttribute('readonly')) {
+                        this.removeAttribute('readonly');
+                        this.blur();    
+                        this.focus();}"
                    placeholder="email"
                    formControlName="email"
-                   autocomplete="off"
-                   [ngClass]="{'red': email.invalid || (isResponseError$ | async) || (email.dirty || email.touched),
+                   (input)="changeState($event.target.value)"
+                   [ngClass]="{'red': (isResponseError$ | async) || (email.dirty || email.touched),
                                'green': email.valid && !(isResponseError$ | async)}">
 
             <div class="invalid_email-message">
@@ -41,9 +45,13 @@
 
             <input class="input_log" 
                    type="password" 
+                   readonly 
+                   onfocus="if (this.hasAttribute('readonly')) {
+                        this.removeAttribute('readonly');
+                        this.blur();    
+                        this.focus();}"
                    placeholder="Password"
-                   formControlName="password"
-                   autocomplete="off">
+                   formControlName="password">
 
             <div class="repeat_pass-text">
                 Repeat password
@@ -53,7 +61,6 @@
                    type="password" 
                    placeholder="Repeat password"
                    formControlName="repeatPassword"
-                   autocomplete="off"
                    [ngClass]="{'red': (isResponseError$ | async) || (repeatPassword.dirty || repeatPassword.touched),
                                'green': signupForm.valid && !(isResponseError$ | async) && repeatPassword.valid}">
                    

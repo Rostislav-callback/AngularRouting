@@ -1,7 +1,9 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
-import { FormGroup, Validators, ValidationErrors, FormBuilder} from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
+import { FormGroup, Validators, FormBuilder} from '@angular/forms';
+import { Router } from "@angular/router";
 
 import { BehaviorSubject } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { Login } from "./../interfaces/login.interface";
 import { AuthService } from '../services/auth.service';
@@ -17,18 +19,29 @@ export class LoginComponent implements OnInit {
 
   public isResponseError$: BehaviorSubject<boolean>;
   public isResponse$: BehaviorSubject<boolean>;
-
+  private subscription: Subscription;
   
   public loginForm: FormGroup;
 
   constructor(private fb: FormBuilder,
+              private router: Router,
               private authService: AuthService) {    
     this.isResponseError$ = this.authService.isResponseError$; 
-    this.isResponse$ = this.authService.isResponse$;       
+    this.isResponse$ = this.authService.isResponse$;   
+    
+    this.subscription = router.events.subscribe(event => {
+      if (event.constructor.name === 'NavigationStart') {
+        this.isResponseError$.next(false);
+      }
+    });
   }
 
   ngOnInit(): void {
     this.initLoginForm();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   get emailLogin() {
@@ -46,6 +59,13 @@ export class LoginComponent implements OnInit {
     };
       
     this.authService.signin(loginDataObject);
+  }
+
+  changeState(data) {
+    let userData = data;
+    if (userData === "") {
+      this.isResponseError$.next(false);
+    }
   }
 
   private initLoginForm() {
