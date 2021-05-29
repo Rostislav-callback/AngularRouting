@@ -1,0 +1,139 @@
+<div class="user_settings-content">
+    <form class="avatar-container">
+        <div class="user_avatar">
+            <img class="user_photo" id="photo">
+        </div>
+
+        <button class="download_photo"
+               type="button"
+               (click)="editUserPhotoButton()"> 
+               <img src="../../../assets/Images/editphotoprofile.png" height="15px" width="15px">
+               Edit</button>
+
+        <input type="file" 
+            style="display:none;" 
+            id="file" 
+            name="file"
+            (click)="setUserPhoto()"
+            #uploadPhoto>
+    </form>
+
+    <form class="user_settings-form"
+          [formGroup]="userInfoForm">
+        <div class="change_user-names">
+            <div class="user_names-conteiner">
+                <mat-form-field class="datapicker_style" appearance="fill" >
+                    <mat-label>First Name</mat-label>
+                    <input type="text" 
+                        matInput
+                        id="fname"
+            
+                        placeholder="Enter your name"
+                        formControlName="firstName">
+                </mat-form-field>
+
+            </div>
+
+            <div class="accept_buttons">
+                <button class="cencel_button">
+                    Cancel
+                </button>
+
+                <button class="confirm_button"
+                    (click)="setFirstName()">
+                    Save
+                </button>
+            </div>
+
+            <div class="user_names-conteiner">
+                <mat-form-field class="datapicker_style" appearance="fill">
+                    <mat-label>Last Name</mat-label>
+                    <input type="text"
+                        id="lname"
+                        matInput
+                        formControlName="lastName">
+                </mat-form-field>
+            </div>
+
+            <div class="accept_buttons">
+                <button class="cencel_button">
+                    Cancel
+                </button>
+
+                <button class="confirm_button"
+                        (click)="setLastName()">
+                    Save
+                </button>
+            </div>
+        </div>
+
+        <div class="change_user-birthday--conteiner">
+            <div class="change_user-birthday">
+                <mat-form-field class="datapicker_style" appearance="fill">
+                    <mat-label>Choose your birth date</mat-label>
+                    <input formControlName="changeBirth" id="birth"matInput [matDatepicker]="picker">
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <button class ="mat_button" 
+                        mat-raised-button (click)="picker.open()">Open Callendar</button>
+            
+                <div class="accept_buttons">
+                    <button class="cencel_button">
+                        Cancel
+                    </button>
+
+                    <button class="confirm_button"
+                            (click)="setBirthday()">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="change_user-password">
+            <div class="change_user-password--conteiner">
+                <mat-form-field class="datapicker_style" appearance="fill">
+                    <mat-label>Current Password</mat-label>
+                    <input type="password"
+                        matInput
+                        formControlName="currentPassword">
+                </mat-form-field>
+            </div>
+
+            <div class="change_user-password--conteiner">
+                <mat-form-field class="datapicker_style" appearance="fill">
+                    <mat-label>New Password</mat-label>
+                    <input type="password"
+                        matInput
+                        formControlName="newPassword">
+                </mat-form-field>
+            </div>
+
+            <div class="change_user-password--conteiner">
+                <mat-form-field class="datapicker_style" appearance="fill">
+                    <mat-label>Confirm Password</mat-label>
+                    <input type="password" 
+                        matInput 
+                        formControlName="confirmPassword">
+                    <mat-error *ngIf="userInfoForm.invalid">
+                        Password is not declare
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="accept_buttons">
+                <button class="cencel_button">
+                    Cancel
+                </button>
+
+                <button class="confirm_button"
+                        (click)="setChangePassword()">
+                    Save
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<input class="testinp">

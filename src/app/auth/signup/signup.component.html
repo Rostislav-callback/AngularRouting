@@ -4,22 +4,14 @@
           (ngSubmit)="setUserData()">
 
         <div class="signup_login">
-            <div class="log_input-text">
-                Sign Up
-            </div>
-
-            <input class="input_log" 
-                   type="text"
-                   readonly 
-                   onfocus="if (this.hasAttribute('readonly')) {
-                        this.removeAttribute('readonly');
-                        this.blur();    
-                        this.focus();}"
-                   placeholder="email"
-                   formControlName="email"
-                   (input)="changeState($event.target.value)"
-                   [ngClass]="{'red': (isResponseError$ | async) || (email.dirty || email.touched),
-                               'green': email.valid && !(isResponseError$ | async)}">
+            <mat-form-field class="datapicker_style" appearance="fill">
+                <mat-label>Sign Up</mat-label>
+                <input class="input_log" 
+                    type="text"
+                    matInput
+                    formControlName="email"
+                    (input)="changeState($event.target.value)">
+            </mat-form-field>
 
             <div class="invalid_email-message">
                 <div *ngIf="(isResponseError$ | async) && email.valid">
@@ -39,31 +31,22 @@
 
 
         <div class="signup_password">  
-            <div class="pass_text">
-                Password
-            </div>
+            <mat-form-field class="datapicker_style pass" appearance="fill">
+                <mat-label>Password</mat-label>
+                <input class="input_log" 
+                    type="password" 
+                    matInput
+                    formControlName="password">
+            </mat-form-field>
 
-            <input class="input_log" 
-                   type="password" 
-                   readonly 
-                   onfocus="if (this.hasAttribute('readonly')) {
-                        this.removeAttribute('readonly');
-                        this.blur();    
-                        this.focus();}"
-                   placeholder="Password"
-                   formControlName="password">
+            <mat-form-field class="datapicker_style" appearance="fill">
+                <mat-label>Repeat Password</mat-label>
+                <input class="input_log" 
+                    type="password" 
+                    matInput
+                    formControlName="repeatPassword">
+            </mat-form-field>
 
-            <div class="repeat_pass-text">
-                Repeat password
-            </div>
-
-            <input class="input_log" 
-                   type="password" 
-                   placeholder="Repeat password"
-                   formControlName="repeatPassword"
-                   [ngClass]="{'red': (isResponseError$ | async) || (repeatPassword.dirty || repeatPassword.touched),
-                               'green': signupForm.valid && !(isResponseError$ | async) && repeatPassword.valid}">
-                   
             <div class="invalid_password-message"
                  *ngIf="signupForm.invalid && repeatPassword.valid">
                   Password does not match.

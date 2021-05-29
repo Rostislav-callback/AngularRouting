@@ -4,23 +4,14 @@
          (ngSubmit)="confirmLoginData()">
 
         <div class="login_login">
-
-            <div class="log_input-text">
-                Login
-            </div>
-
-            <input class="input_log" 
-                   type="text"
-                   placeholder="email"
-                   formControlName="email"
-                   readonly 
-                   onfocus="if (this.hasAttribute('readonly')) {
-                        this.removeAttribute('readonly');
-                        this.blur();    
-                        this.focus();}"
-                   (input)="changeState($event.target.value)"
-                   [ngClass]="{'red': (emailLogin.dirty || emailLogin.touched) || (isResponseError$ | async),
-                               'green': emailLogin.valid && !(isResponseError$ | async)}">
+            <mat-form-field class="datapicker_style" appearance="fill">
+                <mat-label class="label">Login</mat-label>
+                <input class="input_log" 
+                    type="text"
+                    matInput
+                    formControlName="email"
+                    (input)="changeState($event.target.value)">
+            </mat-form-field>
                    
             <div class="invalid_email-message">
                 <div *ngIf="(isResponseError$ | async) && emailLogin.valid">
@@ -39,21 +30,13 @@
         </div>
 
         <div class="login_password">
-            <div class="pass_text">
-                Password
-            </div>
-
-            <input class="input_log" 
-                   type="password" 
-                   placeholder="Password"
-                   formControlName="password"
-                   readonly 
-                   onfocus="if (this.hasAttribute('readonly')) {
-                        this.removeAttribute('readonly');
-                        this.blur();    
-                        this.focus();}"
-                   [ngClass]="{'red': (isResponseError$ | async),
-                               'green': !(isResponseError$ | async) && password.valid}">
+            <mat-form-field class="datapicker_style" appearance="fill">
+                <mat-label class="label">Password</mat-label>
+                <input class="input_log" 
+                    type="password" 
+                    matInput
+                    formControlName="password">
+            </mat-form-field>
 
             <div class="invalid_password-message"
                  *ngIf="(isResponseError$ | async) && password.valid">               

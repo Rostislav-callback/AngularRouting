@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
-import { Signup } from '../interfaces/signup.interface';
+import { UserInfo } from '../../users.interface'
 
 @Component({
   selector: 'app-signup',
@@ -48,9 +48,14 @@ export class SignupComponent implements OnInit {
   }
 
   setUserData() {
-    const usersDataObject: Signup = { 
+    const usersDataObject: UserInfo = { 
       "email":  this.signupForm.value.email,
-      "password":  this.signupForm.value.password
+      "password":  this.signupForm.value.password,
+      "firstName": "",
+      "surname": "",
+      "birthdayDate": "",
+      "userphoto": "",
+      "isAuth": false
     };
 
     this.authService.signup(usersDataObject);
