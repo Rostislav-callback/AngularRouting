@@ -10,7 +10,21 @@
                <img src="../../../assets/Images/editphotoprofile.png" height="15px" width="15px">
                Edit</button>
 
+        <div class="buttons_accept-uploader"
+            *ngIf="isShowButtons$ | async">
+            <button class="cencel_button"
+                    (click)="cencelButtonUploader()">
+                Cancel
+            </button>
+
+            <button class="confirm_button"
+                    (click)="saveButtonUploader()">
+                Save
+            </button>
+        </div>
+
         <input type="file" 
+        class="inp"
             style="display:none;" 
             id="file" 
             name="file"
@@ -25,22 +39,25 @@
                 <mat-form-field class="datapicker_style" appearance="fill" >
                     <mat-label>First Name</mat-label>
                     <input type="text" 
-                        matInput
-                        id="fname"
-            
-                        placeholder="Enter your name"
-                        formControlName="firstName">
+                    class="inp"
+                           matInput
+                           id="fname"
+                           (click)="changeStateFname()"
+                           placeholder="Enter your name"
+                           formControlName="firstName">
                 </mat-form-field>
 
             </div>
 
-            <div class="accept_buttons">
-                <button class="cencel_button">
+            <div class="accept_buttons"
+                [style.visibility]="(isShowButtonsFirstName$ | async)? 'visible' : 'hidden'">
+                <button class="cencel_button"
+                        (click)="cencelFirstNameButton()">
                     Cancel
                 </button>
 
                 <button class="confirm_button"
-                    (click)="setFirstName()">
+                        (click)="setFirstName()">
                     Save
                 </button>
             </div>
@@ -49,14 +66,18 @@
                 <mat-form-field class="datapicker_style" appearance="fill">
                     <mat-label>Last Name</mat-label>
                     <input type="text"
-                        id="lname"
-                        matInput
-                        formControlName="lastName">
+                           id="lname"
+                           class="inp"
+                           matInput
+                           (click)="changeStateLastName()"
+                           formControlName="lastName">
                 </mat-form-field>
             </div>
 
-            <div class="accept_buttons">
-                <button class="cencel_button">
+            <div class="accept_buttons"
+                 [style.visibility]="(isShowButtonsSurName$ | async) ? 'visible' : 'hidden'">
+                <button class="cencel_button"
+                        (click)="cencelSurNameButton()">
                     Cancel
                 </button>
 
@@ -71,15 +92,24 @@
             <div class="change_user-birthday">
                 <mat-form-field class="datapicker_style" appearance="fill">
                     <mat-label>Choose your birth date</mat-label>
-                    <input formControlName="changeBirth" id="birth"matInput [matDatepicker]="picker">
+                    <input formControlName="changeBirth" 
+                           id="birth" 
+                           matInput 
+                           class="inp"
+                           [matDatepicker]="picker"
+                           (click)="changeStateBirthday()"
+                           readonly
+                           onfocus="this.removeAttribute('readonly')">
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
                 <button class ="mat_button" 
                         mat-raised-button (click)="picker.open()">Open Callendar</button>
             
-                <div class="accept_buttons">
-                    <button class="cencel_button">
+                <div class="accept_buttons"
+                    [style.visibility]="(isShowButtonsBirthday$ | async) ? 'visible' : 'hidden'">
+                    <button class="cencel_button"
+                            (click)="cencelBirthdayButton()">
                         Cancel
                     </button>
 
@@ -96,8 +126,8 @@
                 <mat-form-field class="datapicker_style" appearance="fill">
                     <mat-label>Current Password</mat-label>
                     <input type="password"
-                        matInput
-                        formControlName="currentPassword">
+                           matInput
+                           formControlName="currentPassword">
                 </mat-form-field>
             </div>
 
@@ -105,8 +135,8 @@
                 <mat-form-field class="datapicker_style" appearance="fill">
                     <mat-label>New Password</mat-label>
                     <input type="password"
-                        matInput
-                        formControlName="newPassword">
+                           matInput
+                           formControlName="newPassword">
                 </mat-form-field>
             </div>
 
@@ -114,8 +144,8 @@
                 <mat-form-field class="datapicker_style" appearance="fill">
                     <mat-label>Confirm Password</mat-label>
                     <input type="password" 
-                        matInput 
-                        formControlName="confirmPassword">
+                           matInput 
+                           formControlName="confirmPassword">
                     <mat-error *ngIf="userInfoForm.invalid">
                         Password is not declare
                     </mat-error>
@@ -135,5 +165,3 @@
         </div>
     </form>
 </div>
-
-<input class="testinp">

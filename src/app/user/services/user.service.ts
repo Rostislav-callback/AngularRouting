@@ -1,46 +1,61 @@
 import { Injectable } from '@angular/core';
 
+import { BehaviorSubject } from "rxjs";
+
 import { FirstName } from '../interfaces/username.interface';
 import { LastName } from '../interfaces/lastname.interface';
 import { ChangePassword } from '../interfaces/changepassword.interface';
 import { Birthday } from '../interfaces/birthday.interface';
 import { UserPhoto } from '../interfaces/userphoto.interface';
+import { UserInfo } from '../../users.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  public isShowButtons$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public isShowButtonsFirstName$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public isShowButtonsSurName$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public isShowButtonsBirthday$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() {}
 
-  demoFirstNameData() {
-    let fname = document.getElementById('fname');
-    const getFname = JSON.parse(localStorage.getItem('firstname'));
+  //метод загружает промежуточные данные на странице настроек
+  demoPhotoDataBegin() {
+    const photo = JSON.parse(localStorage.getItem('userphoto'));
 
-    return getFname
-    //fname.setAttribute('value', getFname);
+    document.getElementById('photo').setAttribute('src', photo);
   }
 
-  demoLastNameData() {
-    let lname = document.getElementById('lname');
-    const getLname = JSON.parse(localStorage.getItem('lastname'));
+  //метод загрузки старого фото и отмены промежуточного нового
+  demoPhotoDataCencel() {
+    const photo1 = JSON.parse(localStorage.getItem('userphoto1'));
 
-    lname.setAttribute('value', getLname);
+    //фиксим багу подгрузки не того фото после перезагрузки страницы
+    //путём переписывания данных в локал стораж для подгрузки в ngOnInit
+    localStorage.setItem('userphoto', JSON.stringify(photo1));
+
+    document.getElementById('photo').setAttribute('src', photo1);
+
+    document.getElementById('photo1').setAttribute('src', photo1);
   }
 
-  demoBirthdayData() {
-    let birth = document.getElementById('birth');
-    const getBirth = JSON.parse(localStorage.getItem('birthdaydate'));
-
-    birth.setAttribute('value', getBirth);
-  }
-
-  demoPhotoData() {
+  //метод загрузки нового фото для кнопки save
+  demoPhotoDataSave() {
     const photo = JSON.parse(localStorage.getItem('userphoto'));
 
     document.getElementById('photo').setAttribute('src', photo);
 
     document.getElementById('photo1').setAttribute('src', photo);
+  }
+
+  //подгрузка фото в ngOnInit
+  demoPhotoDataEnd() {
+    const photo3 = JSON.parse(localStorage.getItem('userphoto3'));
+
+    document.getElementById('photo').setAttribute('src', photo3);
+
+    document.getElementById('photo1').setAttribute('src', photo3);
   }
 
   headerPhoto() {
@@ -67,6 +82,13 @@ export class UserService {
 
   changeFoto(changeFotoObject: UserPhoto) {
     this.updateData(changeFotoObject);
+  }
+
+  getCurrentUser(): UserInfo {
+    const users = JSON.parse(localStorage.getItem('User'));
+    const authEmail = JSON.parse(localStorage.getItem('Auth User'));
+
+    return users.find(user => user.email = authEmail);
   }
 
   private updateData(newData: FirstName | LastName | Birthday | ChangePassword | UserPhoto): void {
