@@ -13,6 +13,7 @@ import { UserInfo } from '../../users.interface';
   providedIn: 'root'
 })
 export class UserService {
+  //состояние отображения на каждый инпут
   public isShowButtons$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public isShowButtonsFirstName$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public isShowButtonsSurName$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -58,6 +59,7 @@ export class UserService {
     document.getElementById('photo1').setAttribute('src', photo3);
   }
 
+  //подгрузка фото в он инит хедера
   headerPhoto() {
     const photo = JSON.parse(localStorage.getItem('userphoto'));
 
@@ -85,14 +87,14 @@ export class UserService {
   }
 
   getCurrentUser(): UserInfo {
-    const users = JSON.parse(localStorage.getItem('User'));
+    const users = JSON.parse(localStorage.getItem('Users'));
     const authEmail = JSON.parse(localStorage.getItem('Auth User'));
 
     return users.find(user => user.email = authEmail);
   }
 
   private updateData(newData: FirstName | LastName | Birthday | ChangePassword | UserPhoto): void {
-    const users = JSON.parse(localStorage.getItem('User'));
+    const users = JSON.parse(localStorage.getItem('Users'));
     const authEmail = JSON.parse(localStorage.getItem('Auth User'));
 
     const newUsers = users.map(user => {
@@ -113,6 +115,6 @@ export class UserService {
       return user;
     });
   
-    localStorage.setItem('User', JSON.stringify(newUsers));
+    localStorage.setItem('Users', JSON.stringify(newUsers));
   }
 }

@@ -20,6 +20,7 @@ import { UserInfo } from '../../users.interface';
 export class UserSettingsComponent implements OnInit {
   @ViewChild('uploadPhoto', {static: false}) uploadPhoto: ElementRef;
 
+  //отлов и проверка на дом клик с целью сокрытия кнопок по нему
   @HostListener('document:click', ['$event'])
 	onClick(event: Event) {
 		if (!this.el.nativeElement.contains(event.target)) {
@@ -27,14 +28,15 @@ export class UserSettingsComponent implements OnInit {
       this.isShowButtonsSurName$.next(false);
       this.isShowButtonsSurName$.next(false);
       this.isShowButtons$.next(false);
+      //фикс баги инфи в инпуте после убирания кнопок до изменеия инф
+      //просто подгружаем старую инфу
       this.loadDataFromStore();
 		}
 	}
 
   public userInfoForm: FormGroup;
   public getLname = JSON.parse(localStorage.getItem('lastname'));
-  //сохраняем состояние показа на странице 
-  //всплывающих кнопок подтверждения изменений
+  //описание сабжектов смотреть юзер сервисе
   public isShowButtons$: BehaviorSubject<boolean>;
   public isShowButtonsFirstName$: BehaviorSubject<boolean>;
   public isShowButtonsSurName$: BehaviorSubject<boolean>;
@@ -56,6 +58,7 @@ export class UserSettingsComponent implements OnInit {
     this.loadDataFromStore();
   }
 
+  //подгрузка данных в инпуты
   loadDataFromStore() {
     const currentUser: UserInfo = this.userService.getCurrentUser();
 
@@ -66,6 +69,7 @@ export class UserSettingsComponent implements OnInit {
     })
   }
 
+  //сохраняем изменения на кнопку save
   setFirstName() {
     const firstNameObject: FirstName = { 
       "firstName":  this.userInfoForm.value.firstName
@@ -76,6 +80,7 @@ export class UserSettingsComponent implements OnInit {
     this.isShowButtonsFirstName$.next(false);
   }
 
+  //подгружаем старые данные на кнопку cencel
   cencelFirstNameButton() {
     const userObject = JSON.parse(localStorage.getItem('User'));
 
@@ -92,10 +97,13 @@ export class UserSettingsComponent implements OnInit {
     this.loadDataFromStore();
   }
 
+  //меняем состояние отображения кнопок на тру
+  //используется в инпутах атрибутом (click);
   changeStateFname() {
     this.isShowButtonsFirstName$.next(true);
   }
 
+  //сохраняем изменения на кнопку save
   setLastName() {
     const lastNameObject: LastName = { 
       "surname":  this.userInfoForm.value.lastName
@@ -107,6 +115,7 @@ export class UserSettingsComponent implements OnInit {
     this.isShowButtonsSurName$.next(false);
   }
 
+  //подгружаем старые данные на кнопку cencel
   cencelSurNameButton() {
     const userObject = JSON.parse(localStorage.getItem('User'));
 
@@ -123,10 +132,13 @@ export class UserSettingsComponent implements OnInit {
     this.loadDataFromStore();
   }
 
+  //меняем состояние отображения кнопок на тру
+  //используется в инпутах атрибутом (click);
   changeStateLastName() {
     this.isShowButtonsSurName$.next(true);
   }
 
+  //сохраняем изменения на кнопку save
   setBirthday() {
     const birthdayObject: Birthday = { 
       "birthdayDate":  this.userInfoForm.value.changeBirth
@@ -139,6 +151,7 @@ export class UserSettingsComponent implements OnInit {
     this.isShowButtonsBirthday$.next(false);
   }
 
+  //подгружаем старые данные на кнопку cencel
   cencelBirthdayButton() {
     const userObject = JSON.parse(localStorage.getItem('User'));
 
@@ -155,10 +168,13 @@ export class UserSettingsComponent implements OnInit {
     this.loadDataFromStore();
   }
 
+  //меняем состояние отображения кнопок на тру
+  //используется в инпутах атрибутом (click);
   changeStateBirthday() {
     this.isShowButtonsBirthday$.next(true);
   }
 
+  //сохраняем изменения на кнопку save
   setChangePassword() {
     const changePasswordObject: ChangePassword = { 
       "password":  this.userInfoForm.value.confirmPassword
@@ -197,7 +213,7 @@ export class UserSettingsComponent implements OnInit {
     }
   }
 
-  //кнопка edit загрузчика
+  //кнопка edit загрузчика вызывает клик на скрытый инпут
   editUserPhotoButton() {
     document.getElementById('file').click();
     this.isShowButtons$.next(true);

@@ -23,11 +23,11 @@ export class AuthService {
     signup(usersDataObject: UserInfo): void {
         const userData = [];
 
-        if (localStorage.getItem('User') == null) {
+        if (localStorage.getItem('Users') == null) {
             usersDataObject.isAuth = true;
             userData.push(usersDataObject);
 
-            localStorage.setItem('User', JSON.stringify(userData));
+            localStorage.setItem('Users', JSON.stringify(userData));
             localStorage.setItem('Auth User', JSON.stringify(usersDataObject.email));
             localStorage.setItem('Password', JSON.stringify(usersDataObject.password));
             localStorage.setItem('isAuth', 'true');
@@ -36,7 +36,7 @@ export class AuthService {
             this.router.navigate(['/home']);
             this.toastr.success('You are added!', 'Sign Up');
         } else {
-            let data = JSON.parse(localStorage.getItem('User'));
+            let data = JSON.parse(localStorage.getItem('Users'));
 
             const findUser = data.find(user => user.email === usersDataObject.email);
 
@@ -48,7 +48,7 @@ export class AuthService {
                 usersDataObject.isAuth = true;
                 data.push(usersDataObject);
             
-                localStorage.setItem('User', JSON.stringify(data));
+                localStorage.setItem('Users', JSON.stringify(data));
                 localStorage.setItem('Auth User', JSON.stringify(usersDataObject.email));
                 localStorage.setItem('Password', JSON.stringify(usersDataObject.password));
                 localStorage.setItem('isAuth', 'true');
@@ -65,12 +65,12 @@ export class AuthService {
     signin(loginDataObject: UserInfo) {
         const loginData = [];                   
 
-        if (localStorage.getItem('User') == null) {
+        if (localStorage.getItem('Users') == null) {
             this.isResponseError$.next(true);
             this.toastr.error('User not found!', 'Sign Up');
             
         } else {
-            let login = JSON.parse(localStorage.getItem('User'));
+            let login = JSON.parse(localStorage.getItem('Users'));
 
             loginData.push(loginDataObject);
 
@@ -84,7 +84,7 @@ export class AuthService {
                     return user;
                 });
         
-                localStorage.setItem('User', JSON.stringify(userStatus));
+                localStorage.setItem('Users', JSON.stringify(userStatus));
 
                 this.router.navigate(['/home']);
 
@@ -108,7 +108,7 @@ export class AuthService {
     }
 
     logout() {
-        const users = JSON.parse(localStorage.getItem('User'));
+        const users = JSON.parse(localStorage.getItem('Users'));
         const authedUser = JSON.parse(localStorage.getItem('Auth User'));
 
         const logoutUserStatus = users.map(user => {
@@ -119,7 +119,7 @@ export class AuthService {
             return user;
         });
 
-        localStorage.setItem('User', JSON.stringify(logoutUserStatus));
+        localStorage.setItem('Users', JSON.stringify(logoutUserStatus));
     
 
         this.isResponse$.next(false);
