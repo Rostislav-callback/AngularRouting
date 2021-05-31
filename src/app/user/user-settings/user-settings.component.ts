@@ -15,7 +15,6 @@ import { UserInfo } from '../../users.interface';
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.scss']
-  //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserSettingsComponent implements OnInit {
   @ViewChild('uploadPhoto', {static: false}) uploadPhoto: ElementRef;
@@ -28,6 +27,7 @@ export class UserSettingsComponent implements OnInit {
       this.isShowButtonsSurName$.next(false);
       this.isShowButtonsSurName$.next(false);
       this.isShowButtons$.next(false);
+
       //фикс баги инфи в инпуте после убирания кнопок до изменеия инф
       //просто подгружаем старую инфу
       this.loadDataFromStore();
@@ -66,7 +66,7 @@ export class UserSettingsComponent implements OnInit {
       firstName: currentUser.firstName,
       lastName: currentUser.surname,
       changeBirth: currentUser.birthdayDate
-    })
+    });
   }
 
   //сохраняем изменения на кнопку save
@@ -76,7 +76,9 @@ export class UserSettingsComponent implements OnInit {
     };
 
     localStorage.setItem('firstname', JSON.stringify(this.userInfoForm.value.firstName));
+
     this.userService.firstName(firstNameObject);
+
     this.isShowButtonsFirstName$.next(false);
   }
 
@@ -92,8 +94,11 @@ export class UserSettingsComponent implements OnInit {
     };
 
     localStorage.setItem('firstname', JSON.stringify(oldName[0]));
+
     this.userService.firstName(firstNameObject);
+
     this.isShowButtonsFirstName$.next(false);
+
     this.loadDataFromStore();
   }
 
@@ -112,6 +117,7 @@ export class UserSettingsComponent implements OnInit {
     this.userService.lastName(lastNameObject);
 
     localStorage.setItem('lastname', JSON.stringify(this.userInfoForm.value.lastName));
+
     this.isShowButtonsSurName$.next(false);
   }
 
@@ -127,8 +133,11 @@ export class UserSettingsComponent implements OnInit {
     };
 
     localStorage.setItem('lastname', JSON.stringify(oldSurName[0]));
+
     this.userService.lastName(lastNameObject);
+
     this.isShowButtonsSurName$.next(false);
+
     this.loadDataFromStore();
   }
 
@@ -164,7 +173,9 @@ export class UserSettingsComponent implements OnInit {
     this.userService.birthday(birthdayObject);
 
     localStorage.setItem('birthdaydate', JSON.stringify(oldBirthdayName[0]));
+
     this.isShowButtonsBirthday$.next(false);
+
     this.loadDataFromStore();
   }
 
@@ -184,6 +195,7 @@ export class UserSettingsComponent implements OnInit {
 
     if (password == this.userInfoForm.value.currentPassword) {
       this.userService.changePassword(changePasswordObject);
+
       localStorage.setItem('Password', JSON.stringify(this.userInfoForm.value.confirmPassword));
     }
   }
@@ -195,7 +207,9 @@ export class UserSettingsComponent implements OnInit {
 
     userPhoto.onchange = () => {
       const file = userPhoto.files[0];
+
       this.uploadPhoto.nativeElement.value = '';
+
       const reader = new FileReader();
 
       if (file) {
@@ -216,6 +230,7 @@ export class UserSettingsComponent implements OnInit {
   //кнопка edit загрузчика вызывает клик на скрытый инпут
   editUserPhotoButton() {
     document.getElementById('file').click();
+
     this.isShowButtons$.next(true);
   }
 
@@ -232,6 +247,7 @@ export class UserSettingsComponent implements OnInit {
     localStorage.setItem('userphoto3', JSON.stringify(oldPhotoUrl[0]));
     
     this.userService.demoPhotoDataCencel();
+
     this.isShowButtons$.next(false);
   }
 
@@ -239,6 +255,7 @@ export class UserSettingsComponent implements OnInit {
   //сохраняем новое фото в объект юзера
   saveButtonUploader()  {
     const getUrl = JSON.parse(localStorage.getItem('userphoto'));
+
     localStorage.setItem('userphoto3', JSON.stringify(getUrl));
 
     const changeFotoObject: UserPhoto = {
@@ -246,7 +263,9 @@ export class UserSettingsComponent implements OnInit {
     };
 
     this.userService.changeFoto(changeFotoObject);
+
     this.userService.demoPhotoDataSave();
+
     this.isShowButtons$.next(false);
   }
 

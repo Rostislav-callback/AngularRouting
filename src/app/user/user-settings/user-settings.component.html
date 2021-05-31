@@ -24,12 +24,11 @@
         </div>
 
         <input type="file" 
-        class="inp"
-            style="display:none;" 
-            id="file" 
-            name="file"
-            (click)="setUserPhoto()"
-            #uploadPhoto>
+               style="display:none;" 
+               id="file" 
+               name="file"
+               (click)="setUserPhoto()"
+               #uploadPhoto>
     </form>
 
     <form class="user_settings-form"
@@ -39,7 +38,6 @@
                 <mat-form-field class="datapicker_style" appearance="fill" >
                     <mat-label>First Name</mat-label>
                     <input type="text" 
-                    class="inp"
                            matInput
                            id="fname"
                            (click)="changeStateFname()"
@@ -67,7 +65,6 @@
                     <mat-label>Last Name</mat-label>
                     <input type="text"
                            id="lname"
-                           class="inp"
                            matInput
                            (click)="changeStateLastName()"
                            formControlName="lastName">
@@ -95,7 +92,6 @@
                     <input formControlName="changeBirth" 
                            id="birth" 
                            matInput 
-                           class="inp"
                            [matDatepicker]="picker"
                            (click)="changeStateBirthday()"
                            readonly
