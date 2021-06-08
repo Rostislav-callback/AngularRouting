@@ -1,4 +1,4 @@
-<div class="user_settings-content">
+<div class="user_settings-content" hideButtons>
     <form class="avatar-container">
         <div class="user_avatar">
             <img class="user_photo" id="photo">
@@ -10,15 +10,12 @@
                <img src="../../../assets/Images/editphotoprofile.png" height="15px" width="15px">
                Edit</button>
 
-        <div class="buttons_accept-uploader"
-            *ngIf="isShowButtons$ | async">
-            <button class="cencel_button"
-                    (click)="cencelButtonUploader()">
+        <div class="buttons_accept-" *ngIf="isShowButtons$ | async" >
+            <button class="cancel_button" (click)="cancelButtonUploader()">
                 Cancel
             </button>
 
-            <button class="confirm_button"
-                    (click)="saveButtonUploader()">
+            <button class="confirm_button" (click)="saveButtonUploader()">
                 Save
             </button>
         </div>
@@ -44,18 +41,14 @@
                            placeholder="Enter your name"
                            formControlName="firstName">
                 </mat-form-field>
-
             </div>
 
-            <div class="accept_buttons"
-                [style.visibility]="(isShowButtonsFirstName$ | async)? 'visible' : 'hidden'">
-                <button class="cencel_button"
-                        (click)="cencelFirstNameButton()">
+            <div class="accept_buttons" id="first" style="visibility: hidden;">
+                <button class="cancel_button" (click)="cancelFirstNameButton()">
                     Cancel
                 </button>
 
-                <button class="confirm_button"
-                        (click)="setFirstName()">
+                <button class="confirm_button" (click)="setFirstName()">
                     Save
                 </button>
             </div>
@@ -64,17 +57,14 @@
                 <mat-form-field class="datapicker_style" appearance="fill">
                     <mat-label>Last Name</mat-label>
                     <input type="text"
-                           id="lname"
                            matInput
                            (click)="changeStateLastName()"
                            formControlName="lastName">
                 </mat-form-field>
             </div>
 
-            <div class="accept_buttons"
-                 [style.visibility]="(isShowButtonsSurName$ | async) ? 'visible' : 'hidden'">
-                <button class="cencel_button"
-                        (click)="cencelSurNameButton()">
+            <div class="accept_buttons" id="second" style="visibility: hidden;">
+                <button class="cancel_button" (click)="cancelSurNameButton()">
                     Cancel
                 </button>
 
@@ -89,8 +79,7 @@
             <div class="change_user-birthday">
                 <mat-form-field class="datapicker_style" appearance="fill">
                     <mat-label>Choose your birth date</mat-label>
-                    <input formControlName="changeBirth" 
-                           id="birth" 
+                    <input formControlName="changeBirth"  
                            matInput 
                            [matDatepicker]="picker"
                            (click)="changeStateBirthday()"
@@ -100,17 +89,16 @@
                 </mat-form-field>
 
                 <button class ="mat_button" 
-                        mat-raised-button (click)="picker.open()">Open Callendar</button>
+                        mat-raised-button 
+                        (click)="picker.open()">Open Callendar
+                </button>
             
-                <div class="accept_buttons"
-                    [style.visibility]="(isShowButtonsBirthday$ | async) ? 'visible' : 'hidden'">
-                    <button class="cencel_button"
-                            (click)="cencelBirthdayButton()">
+                <div class="accept_buttons" id="birth" style="visibility: hidden;">
+                    <button class="cancel_button" (click)="cancelBirthdayButton()">
                         Cancel
                     </button>
 
-                    <button class="confirm_button"
-                            (click)="setBirthday()">
+                    <button class="confirm_button" (click)="setBirthday()">
                         Save
                     </button>
                 </div>
@@ -149,15 +137,16 @@
             </div>
 
             <div class="accept_buttons">
-                <button class="cencel_button">
+                <button class="cancel_button">
                     Cancel
                 </button>
 
-                <button class="confirm_button"
-                        (click)="setChangePassword()">
+                <button class="confirm_button" (click)="setChangePassword()">
                     Save
                 </button>
             </div>
         </div>
     </form>
 </div>
+
+<!--[style.visibility]="(isShowButtons$ | async)? 'visible' : 'hidden'"-->

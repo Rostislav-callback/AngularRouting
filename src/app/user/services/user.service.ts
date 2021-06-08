@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 import { FirstName } from '../interfaces/username.interface';
 import { LastName } from '../interfaces/lastname.interface';
@@ -13,57 +13,20 @@ import { UserInfo } from '../../users.interface';
   providedIn: 'root'
 })
 export class UserService {
-  //состояние отображения на каждый инпут
-  public isShowButtons$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public isShowButtonsFirstName$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public isShowButtonsSurName$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public isShowButtonsBirthday$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private isShowButtons$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() {}
 
-  //метод загружает промежуточные данные на странице настроек
-  demoPhotoDataBegin() {
-    const photo = JSON.parse(localStorage.getItem('userphoto'));
-
-    document.getElementById('photo').setAttribute('src', photo);
+  getInputState(): Observable<boolean> {
+    return this.isShowButtons$.asObservable()
   }
 
-  //метод загрузки старого фото и отмены промежуточного нового
-  demoPhotoDataCencel() {
-    const photo1 = JSON.parse(localStorage.getItem('userphoto1'));
-
-    //фиксим багу подгрузки не того фото после перезагрузки страницы
-    //путём переписывания данных в локал стораж для подгрузки в ngOnInit
-    localStorage.setItem('userphoto', JSON.stringify(photo1));
-
-    document.getElementById('photo').setAttribute('src', photo1);
-
-    document.getElementById('photo1').setAttribute('src', photo1);
+  isInputStateTrue() {
+    this.isShowButtons$.next(true);
   }
 
-  //метод загрузки нового фото для кнопки save
-  demoPhotoDataSave() {
-    const photo = JSON.parse(localStorage.getItem('userphoto'));
-
-    document.getElementById('photo').setAttribute('src', photo);
-
-    document.getElementById('photo1').setAttribute('src', photo);
-  }
-
-  //подгрузка фото в ngOnInit
-  demoPhotoDataEnd() {
-    const photo3 = JSON.parse(localStorage.getItem('userphoto3'));
-
-    document.getElementById('photo').setAttribute('src', photo3);
-
-    document.getElementById('photo1').setAttribute('src', photo3);
-  }
-
-  //подгрузка фото в он инит хедера
-  headerPhoto() {
-    const photo = JSON.parse(localStorage.getItem('userphoto'));
-
-    document.getElementById('photo1').setAttribute('src', photo);
+  isInputStateFalse() {
+    this.isShowButtons$.next(false);
   }
 
   firstName(firstNameObject: FirstName) {

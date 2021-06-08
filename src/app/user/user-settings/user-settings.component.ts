@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild, HostListener} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, ValidationErrors, FormBuilder} from '@angular/forms';
 
-import { BehaviorSubject } from "rxjs";
+import { Observable } from "rxjs";
 
 import { FirstName } from '../interfaces/username.interface';
 import { LastName } from '../interfaces/lastname.interface';
@@ -10,6 +10,7 @@ import { Birthday } from '../interfaces/birthday.interface';
 import { UserPhoto } from '../interfaces/userphoto.interface';
 import { UserService } from '../services/user.service';
 import { UserInfo } from '../../users.interface';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -19,46 +20,24 @@ import { UserInfo } from '../../users.interface';
 export class UserSettingsComponent implements OnInit {
   @ViewChild('uploadPhoto', {static: false}) uploadPhoto: ElementRef;
 
-  //отлов и проверка на дом клик с целью сокрытия кнопок по нему
-  @HostListener('document:click', ['$event'])
-	onClick(event: Event) {
-		if (!this.el.nativeElement.contains(event.target)) {
-			this.isShowButtonsFirstName$.next(false);
-      this.isShowButtonsSurName$.next(false);
-      this.isShowButtonsSurName$.next(false);
-      this.isShowButtons$.next(false);
-
-      //фикс баги инфи в инпуте после убирания кнопок до изменеия инф
-      //просто подгружаем старую инфу
-      this.loadDataFromStore();
-		}
-	}
-
   public userInfoForm: FormGroup;
   public getLname = JSON.parse(localStorage.getItem('lastname'));
-  //описание сабжектов смотреть юзер сервисе
-  public isShowButtons$: BehaviorSubject<boolean>;
-  public isShowButtonsFirstName$: BehaviorSubject<boolean>;
-  public isShowButtonsSurName$: BehaviorSubject<boolean>;
-  public isShowButtonsBirthday$: BehaviorSubject<boolean>;
 
+  isShowButtons$: Observable<boolean>;
+  
   constructor(private fb: FormBuilder,
               private userService: UserService,
-              private el: ElementRef) {
-    this.isShowButtons$ = this.userService.isShowButtons$;
-    this.isShowButtonsFirstName$ = this.userService.isShowButtonsFirstName$;
-    this.isShowButtonsSurName$ = this.userService.isShowButtonsSurName$;
-    this.isShowButtonsBirthday$ = this.userService.isShowButtonsBirthday$;
+              private storageService: StorageService) {
   }
 
   ngOnInit(): void {
-    this.userService.demoPhotoDataSave();
+    this.storageService.saveFinishedPhotoUrl();
+    this.isShowButtons$ = this.userService.getInputState();
 
     this.initForm();
     this.loadDataFromStore();
   }
 
-  //подгрузка данных в инпуты
   loadDataFromStore() {
     const currentUser: UserInfo = this.userService.getCurrentUser();
 
@@ -69,7 +48,6 @@ export class UserSettingsComponent implements OnInit {
     });
   }
 
-  //сохраняем изменения на кнопку save
   setFirstName() {
     const firstNameObject: FirstName = { 
       "firstName":  this.userInfoForm.value.firstName
@@ -78,15 +56,11 @@ export class UserSettingsComponent implements OnInit {
     localStorage.setItem('firstname', JSON.stringify(this.userInfoForm.value.firstName));
 
     this.userService.firstName(firstNameObject);
-
-    this.isShowButtonsFirstName$.next(false);
+    document.getElementById('first').style.visibility = 'hidden';
   }
 
-  //подгружаем старые данные на кнопку cencel
-  cencelFirstNameButton() {
-    const userObject = JSON.parse(localStorage.getItem('User'));
-
-    //получаем сохранённое ранее фото из объекта юзера
+  cancelFirstNameButton() {
+    const userObject = JSON.parse(localStorage.getItem('Users'));
     const oldName = userObject.map(user => user.firstName);
 
     const firstNameObject: FirstName = { 
@@ -96,36 +70,26 @@ export class UserSettingsComponent implements OnInit {
     localStorage.setItem('firstname', JSON.stringify(oldName[0]));
 
     this.userService.firstName(firstNameObject);
-
-    this.isShowButtonsFirstName$.next(false);
-
+    document.getElementById('first').style.visibility = 'hidden';
     this.loadDataFromStore();
   }
 
-  //меняем состояние отображения кнопок на тру
-  //используется в инпутах атрибутом (click);
   changeStateFname() {
-    this.isShowButtonsFirstName$.next(true);
+    document.getElementById('first').style.visibility = 'visible';
   }
 
-  //сохраняем изменения на кнопку save
   setLastName() {
     const lastNameObject: LastName = { 
       "surname":  this.userInfoForm.value.lastName
     };
 
-    this.userService.lastName(lastNameObject);
-
     localStorage.setItem('lastname', JSON.stringify(this.userInfoForm.value.lastName));
-
-    this.isShowButtonsSurName$.next(false);
+    this.userService.lastName(lastNameObject);
+    document.getElementById('second').style.visibility = 'hidden';
   }
 
-  //подгружаем старые данные на кнопку cencel
-  cencelSurNameButton() {
-    const userObject = JSON.parse(localStorage.getItem('User'));
-
-    //получаем сохранённое ранее фото из объекта юзера
+  cancelSurNameButton() {
+    const userObject = JSON.parse(localStorage.getItem('Users'));
     const oldSurName = userObject.map(user => user.surname);
 
     const lastNameObject: LastName = { 
@@ -133,59 +97,43 @@ export class UserSettingsComponent implements OnInit {
     };
 
     localStorage.setItem('lastname', JSON.stringify(oldSurName[0]));
-
     this.userService.lastName(lastNameObject);
-
-    this.isShowButtonsSurName$.next(false);
-
     this.loadDataFromStore();
+    document.getElementById('second').style.visibility = 'hidden';
   }
 
-  //меняем состояние отображения кнопок на тру
-  //используется в инпутах атрибутом (click);
   changeStateLastName() {
-    this.isShowButtonsSurName$.next(true);
+    document.getElementById('second').style.visibility = 'visible';
   }
 
-  //сохраняем изменения на кнопку save
   setBirthday() {
     const birthdayObject: Birthday = { 
       "birthdayDate":  this.userInfoForm.value.changeBirth
     };
 
-    this.userService.birthday(birthdayObject);
-
     localStorage.setItem('birthdaydate', JSON.stringify(this.userInfoForm.value.changeBirth));
-
-    this.isShowButtonsBirthday$.next(false);
+    this.userService.birthday(birthdayObject);
+    document.getElementById('birth').style.visibility = 'hidden';
   }
 
-  //подгружаем старые данные на кнопку cencel
-  cencelBirthdayButton() {
-    const userObject = JSON.parse(localStorage.getItem('User'));
-
+  cancelBirthdayButton() {
+    const userObject = JSON.parse(localStorage.getItem('Users'));
     const oldBirthdayName = userObject.map(user => user.birthdayDate);
 
     const birthdayObject: Birthday = { 
       "birthdayDate":  oldBirthdayName[0]
     };
 
-    this.userService.birthday(birthdayObject);
-
     localStorage.setItem('birthdaydate', JSON.stringify(oldBirthdayName[0]));
-
-    this.isShowButtonsBirthday$.next(false);
-
+    document.getElementById('birth').style.visibility = 'hidden';
+    this.userService.birthday(birthdayObject);
     this.loadDataFromStore();
   }
 
-  //меняем состояние отображения кнопок на тру
-  //используется в инпутах атрибутом (click);
   changeStateBirthday() {
-    this.isShowButtonsBirthday$.next(true);
+    document.getElementById('birth').style.visibility = 'visible';
   }
 
-  //сохраняем изменения на кнопку save
   setChangePassword() {
     const changePasswordObject: ChangePassword = { 
       "password":  this.userInfoForm.value.confirmPassword
@@ -195,21 +143,17 @@ export class UserSettingsComponent implements OnInit {
 
     if (password == this.userInfoForm.value.currentPassword) {
       this.userService.changePassword(changePasswordObject);
-
       localStorage.setItem('Password', JSON.stringify(this.userInfoForm.value.confirmPassword));
     }
   }
 
-  //загрузка промежуточной фотки
   setUserPhoto() {
     const userPhoto = this.uploadPhoto.nativeElement;
     const avatar = document.getElementById('photo');
 
     userPhoto.onchange = () => {
       const file = userPhoto.files[0];
-
       this.uploadPhoto.nativeElement.value = '';
-
       const reader = new FileReader();
 
       if (file) {
@@ -220,56 +164,41 @@ export class UserSettingsComponent implements OnInit {
         localStorage.setItem('userphoto', JSON.stringify(event.target.result));
 
         if (avatar.hasAttribute('src')) {
-          //загрузка промежуточной data
-          this.userService.demoPhotoDataBegin();
+          this.storageService.saveDemoPhotoUrlOnUploader();
         } 
       }
     }
   }
 
-  //кнопка edit загрузчика вызывает клик на скрытый инпут
   editUserPhotoButton() {
     document.getElementById('file').click();
-
-    this.isShowButtons$.next(true);
+    this.userService.isInputStateTrue()
   }
 
-  //кнопка отмены загрузчика
-  //выгружаем старое фото юзера
-  cencelButtonUploader() {
-    const userObject = JSON.parse(localStorage.getItem('User'));
-
-    //получаем сохранённое ранее фото из объекта юзера
+  cancelButtonUploader() {
+    const userObject = JSON.parse(localStorage.getItem('Users'));
     const oldPhotoUrl = userObject.map(user => user.userphoto);
 
     localStorage.setItem('userphoto1', JSON.stringify(oldPhotoUrl[0]));
-    //Фиксим багу с он инит
-    localStorage.setItem('userphoto3', JSON.stringify(oldPhotoUrl[0]));
-    
-    this.userService.demoPhotoDataCencel();
-
-    this.isShowButtons$.next(false);
+    localStorage.setItem('userphoto2', JSON.stringify(oldPhotoUrl[0]));
+    this.storageService.savePhotoUrlOnCencelButton();
   }
 
-  //кнопка сохранения загрузчика
-  //сохраняем новое фото в объект юзера
   saveButtonUploader()  {
     const getUrl = JSON.parse(localStorage.getItem('userphoto'));
 
-    localStorage.setItem('userphoto3', JSON.stringify(getUrl));
+    localStorage.setItem('userphoto2', JSON.stringify(getUrl));
 
     const changeFotoObject: UserPhoto = {
       "userphoto": getUrl
     };
 
     this.userService.changeFoto(changeFotoObject);
-
-    this.userService.demoPhotoDataSave();
-
-    this.isShowButtons$.next(false);
+    this.storageService.savePhotoUrlOnSaveButton();
+    this.userService.isInputStateFalse();
   }
 
-  public changePasswordValidator(control: FormGroup): ValidationErrors | null {
+  private changePasswordValidator(control: FormGroup): ValidationErrors | null {
     const [,,,, newPassword, confirmPassword] = Object.values(control.value);
 
     return newPassword === confirmPassword ? null : {

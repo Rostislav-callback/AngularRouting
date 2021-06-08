@@ -20,9 +20,9 @@ import { DashboardComponent } from './head/dashboard/dashboard.component';
 import { AboutUsComponent } from './head/about-us/about-us.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { UserService } from './user/services/user.service';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { UserSettingsComponent } from './user/user-settings/user-settings.component';
+import { SettingsDirective } from './user/directives/settings.directive';
 
 
 @NgModule({
@@ -35,7 +35,8 @@ import { UserSettingsComponent } from './user/user-settings/user-settings.compon
     LoginComponent,
     SignupComponent,
     UserProfileComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    SettingsDirective
   ],
   imports: [
     BrowserModule,
