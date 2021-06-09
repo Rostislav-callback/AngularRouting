@@ -3,6 +3,19 @@ a {
     color: #000000;
 }
 
+// mat-input error carent color
+::ng-deep .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+    caret-color: rgba(0,0,0,.6)!important;
+}
+
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: rgba(0,0,0,.6)!important;
+}
+
+::ng-deep.mat-form-field.mat-form-field-invalid .mat-form-field-ripple{
+    background-color: rgba(0,0,0,.1)!important;
+}
+
 .avatar-container {
     height: 300px;
     width: 250px;

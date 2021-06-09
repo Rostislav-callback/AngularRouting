@@ -210,10 +210,31 @@ export class UserSettingsComponent implements OnInit {
     this.userService.isInputStateFalse();
   }
 
+  get currentPassword() {
+    return this.userInfoForm.get('currentPassword');
+  }
+
+  get newPassword() {
+    return this.userInfoForm.get('newPassword');
+  }
+
+  get confirmPassword() {
+    return this.userInfoForm.get('confirmPassword');
+  }
+
   private changePasswordValidator(control: FormGroup): ValidationErrors | null {
     const [,,,, newPassword, confirmPassword] = Object.values(control.value);
 
     return newPassword === confirmPassword ? null : {
+      'Password' : 'Non working'
+    }
+  }
+
+  private currentPasswordValidator(control: FormGroup): ValidationErrors | null {
+    const pass = JSON.parse(localStorage.getItem('Password'));
+    const [,,,currentPassword ,,] = Object.values(control.value);
+
+    return currentPassword === pass ? null : {
       'Password' : 'Non working'
     }
   }
@@ -223,11 +244,11 @@ export class UserSettingsComponent implements OnInit {
       firstName: [''],
       lastName: [''],
       changeBirth: [''],
-      currentPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      currentPassword: [''],
+      newPassword: [''],
+      confirmPassword: ['']
     }, {
-      validators: [this.changePasswordValidator]
+      validators: [this.changePasswordValidator, this.currentPasswordValidator]
     });
   }
 }
