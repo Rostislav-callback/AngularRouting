@@ -21,6 +21,7 @@ export class UserService {
     return this.isShowButtons$.asObservable()
   }
 
+  //change
   isInputStateTrue() {
     this.isShowButtons$.next(true);
   }

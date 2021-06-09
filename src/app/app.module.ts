@@ -9,6 +9,7 @@ import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
@@ -45,6 +46,7 @@ import { SettingsDirective } from './user/directives/settings.directive';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
     MatToolbarModule,
     RouterModule.forRoot([
       {path: 'home', component: HomeComponent},

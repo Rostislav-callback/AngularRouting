@@ -40,10 +40,11 @@
                            (click)="changeStateFname()"
                            placeholder="Enter your name"
                            formControlName="firstName">
+                    <mat-icon (click)="changeStateFname()" matSuffix>create</mat-icon>
                 </mat-form-field>
             </div>
 
-            <div class="accept_buttons" id="first" style="visibility: hidden;">
+            <div class="accept_buttons" id="first" style="visibility: hidden;" #getNameBut>
                 <button class="cancel_button" (click)="cancelFirstNameButton()">
                     Cancel
                 </button>
@@ -60,10 +61,11 @@
                            matInput
                            (click)="changeStateLastName()"
                            formControlName="lastName">
+                           <mat-icon (click)="changeStateLastName()" matSuffix>create</mat-icon>
                 </mat-form-field>
             </div>
 
-            <div class="accept_buttons" id="second" style="visibility: hidden;">
+            <div class="accept_buttons" id="second" style="visibility: hidden;" #getSurnameBut>
                 <button class="cancel_button" (click)="cancelSurNameButton()">
                     Cancel
                 </button>
@@ -85,15 +87,11 @@
                            (click)="changeStateBirthday()"
                            readonly
                            onfocus="this.removeAttribute('readonly')">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
-
-                <button class ="mat_button" 
-                        mat-raised-button 
-                        (click)="picker.open()">Open Callendar
-                </button>
             
-                <div class="accept_buttons" id="birth" style="visibility: hidden;">
+                <div class="accept_buttons" id="birth" style="visibility: hidden;" #getBirthayBut>
                     <button class="cancel_button" (click)="cancelBirthdayButton()">
                         Cancel
                     </button>
@@ -111,7 +109,9 @@
                     <mat-label>Current Password</mat-label>
                     <input type="password"
                            matInput
-                           formControlName="currentPassword">
+                           formControlName="currentPassword"
+                           (click)="changeStatePassword()">
+                    <mat-icon (click)="changeStatePassword()" matSuffix>create</mat-icon>
                 </mat-form-field>
             </div>
 
@@ -130,18 +130,18 @@
                     <input type="password" 
                            matInput 
                            formControlName="confirmPassword">
-                    <mat-error *ngIf="userInfoForm.invalid">
+                    <mat-error *ngIf="userInfoForm.invalid && userInfoForm.dirty">
                         Password is not declare
                     </mat-error>
                 </mat-form-field>
             </div>
 
-            <div class="accept_buttons">
-                <button class="cancel_button">
+            <div class="accept_buttons" #getPasswordBut style="visibility: hidden;">
+                <button class="cancel_button" (click)="cancelPasswordButton()">
                     Cancel
                 </button>
 
-                <button class="confirm_button" (click)="setChangePassword()">
+                <button [disabled]="userInfoForm.invalid" class="confirm_button" (click)="setChangePassword()">
                     Save
                 </button>
             </div>

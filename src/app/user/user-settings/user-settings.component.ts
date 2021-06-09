@@ -19,6 +19,10 @@ import { StorageService } from '../services/storage.service';
 })
 export class UserSettingsComponent implements OnInit {
   @ViewChild('uploadPhoto', {static: false}) uploadPhoto: ElementRef;
+  @ViewChild('getNameBut', {static: true}) getNameBut: ElementRef;
+  @ViewChild('getSurnameBut', {static: true}) getSurnameBut: ElementRef;
+  @ViewChild('getBirthayBut', {static: true}) getBirthayBut: ElementRef;
+  @ViewChild('getPasswordBut', {static: true}) getPasswordBut: ElementRef;
 
   public userInfoForm: FormGroup;
   public getLname = JSON.parse(localStorage.getItem('lastname'));
@@ -33,7 +37,7 @@ export class UserSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.storageService.saveFinishedPhotoUrl();
     this.isShowButtons$ = this.userService.getInputState();
-
+    
     this.initForm();
     this.loadDataFromStore();
   }
@@ -54,9 +58,8 @@ export class UserSettingsComponent implements OnInit {
     };
 
     localStorage.setItem('firstname', JSON.stringify(this.userInfoForm.value.firstName));
-
     this.userService.firstName(firstNameObject);
-    document.getElementById('first').style.visibility = 'hidden';
+    this.getNameBut.nativeElement.style.visibility = 'hidden';
   }
 
   cancelFirstNameButton() {
@@ -68,14 +71,13 @@ export class UserSettingsComponent implements OnInit {
     };
 
     localStorage.setItem('firstname', JSON.stringify(oldName[0]));
-
+    this.getNameBut.nativeElement.style.visibility = 'hidden';
     this.userService.firstName(firstNameObject);
-    document.getElementById('first').style.visibility = 'hidden';
     this.loadDataFromStore();
   }
 
   changeStateFname() {
-    document.getElementById('first').style.visibility = 'visible';
+    this.getNameBut.nativeElement.style.visibility = 'visible';
   }
 
   setLastName() {
@@ -84,8 +86,8 @@ export class UserSettingsComponent implements OnInit {
     };
 
     localStorage.setItem('lastname', JSON.stringify(this.userInfoForm.value.lastName));
+    this.getSurnameBut.nativeElement.style.visibility = 'hidden';
     this.userService.lastName(lastNameObject);
-    document.getElementById('second').style.visibility = 'hidden';
   }
 
   cancelSurNameButton() {
@@ -97,13 +99,13 @@ export class UserSettingsComponent implements OnInit {
     };
 
     localStorage.setItem('lastname', JSON.stringify(oldSurName[0]));
+    this.getSurnameBut.nativeElement.style.visibility = 'hidden';
     this.userService.lastName(lastNameObject);
     this.loadDataFromStore();
-    document.getElementById('second').style.visibility = 'hidden';
   }
 
   changeStateLastName() {
-    document.getElementById('second').style.visibility = 'visible';
+    this.getSurnameBut.nativeElement.style.visibility = 'visible';
   }
 
   setBirthday() {
@@ -112,8 +114,8 @@ export class UserSettingsComponent implements OnInit {
     };
 
     localStorage.setItem('birthdaydate', JSON.stringify(this.userInfoForm.value.changeBirth));
+    this.getBirthayBut.nativeElement.style.visibility = 'hidden';
     this.userService.birthday(birthdayObject);
-    document.getElementById('birth').style.visibility = 'hidden';
   }
 
   cancelBirthdayButton() {
@@ -125,13 +127,13 @@ export class UserSettingsComponent implements OnInit {
     };
 
     localStorage.setItem('birthdaydate', JSON.stringify(oldBirthdayName[0]));
-    document.getElementById('birth').style.visibility = 'hidden';
+    this.getBirthayBut.nativeElement.style.visibility = 'hidden';
     this.userService.birthday(birthdayObject);
     this.loadDataFromStore();
   }
 
   changeStateBirthday() {
-    document.getElementById('birth').style.visibility = 'visible';
+    this.getBirthayBut.nativeElement.style.visibility = 'visible';
   }
 
   setChangePassword() {
@@ -144,7 +146,17 @@ export class UserSettingsComponent implements OnInit {
     if (password == this.userInfoForm.value.currentPassword) {
       this.userService.changePassword(changePasswordObject);
       localStorage.setItem('Password', JSON.stringify(this.userInfoForm.value.confirmPassword));
+      this.getPasswordBut.nativeElement.style.visibility = 'hidden';
     }
+  }
+
+  cancelPasswordButton() {
+    this.getPasswordBut.nativeElement.style.visibility = 'hidden';
+    this.loadDataFromStore();
+  }
+
+  changeStatePassword() {
+    this.getPasswordBut.nativeElement.style.visibility = 'visible';
   }
 
   setUserPhoto() {
@@ -211,9 +223,9 @@ export class UserSettingsComponent implements OnInit {
       firstName: [''],
       lastName: [''],
       changeBirth: [''],
-      currentPassword: [''],
-      newPassword: [''],
-      confirmPassword: ['']
+      currentPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     }, {
       validators: [this.changePasswordValidator]
     });
