@@ -19,6 +19,7 @@ import { StorageService } from '../services/storage.service';
 })
 export class UserSettingsComponent implements OnInit {
   @ViewChild('uploadPhoto', {static: false}) uploadPhoto: ElementRef;
+  @ViewChild('passwordValue', {static: false}) passwordValue: ElementRef;
   @ViewChild('getNameBut', {static: true}) getNameBut: ElementRef;
   @ViewChild('getSurnameBut', {static: true}) getSurnameBut: ElementRef;
   @ViewChild('getBirthayBut', {static: true}) getBirthayBut: ElementRef;
@@ -28,7 +29,8 @@ export class UserSettingsComponent implements OnInit {
   public getLname = JSON.parse(localStorage.getItem('lastname'));
 
   isShowButtons$: Observable<boolean>;
-  
+  isShowError$: Observable<boolean>;
+
   constructor(private fb: FormBuilder,
               private userService: UserService,
               private storageService: StorageService) {
@@ -37,6 +39,7 @@ export class UserSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.storageService.saveFinishedPhotoUrl();
     this.isShowButtons$ = this.userService.getInputState();
+    this.isShowError$ = this.userService.getErrorState();
     
     this.initForm();
     this.loadDataFromStore();
@@ -184,7 +187,7 @@ export class UserSettingsComponent implements OnInit {
 
   editUserPhotoButton() {
     document.getElementById('file').click();
-    this.userService.isInputStateTrue()
+    this.userService.changeInputStateTrue()
   }
 
   cancelButtonUploader() {
@@ -207,7 +210,7 @@ export class UserSettingsComponent implements OnInit {
 
     this.userService.changeFoto(changeFotoObject);
     this.storageService.savePhotoUrlOnSaveButton();
-    this.userService.isInputStateFalse();
+    this.userService.changeInputStateFalse();
   }
 
   get currentPassword() {
@@ -222,19 +225,21 @@ export class UserSettingsComponent implements OnInit {
     return this.userInfoForm.get('confirmPassword');
   }
 
-  private changePasswordValidator(control: FormGroup): ValidationErrors | null {
-    const [,,,, newPassword, confirmPassword] = Object.values(control.value);
-
-    return newPassword === confirmPassword ? null : {
-      'Password' : 'Non working'
+  changeState() {
+    const pass = JSON.parse(localStorage.getItem('Password'));
+    let userData = this.passwordValue.nativeElement.value;
+    if (userData === "" || this.userInfoForm.untouched || userData === pass) {
+      this.userService.changeErrorStateFalse();
+    } else if (userData !== pass) {
+      this.userService.changeErrorStateTrue()
     }
   }
 
-  private currentPasswordValidator(control: FormGroup): ValidationErrors | null {
+  private changePasswordValidator(control: FormGroup): ValidationErrors | null {
     const pass = JSON.parse(localStorage.getItem('Password'));
-    const [,,,currentPassword ,,] = Object.values(control.value);
+    const [,,,currentPassword , newPassword, confirmPassword] = Object.values(control.value);
 
-    return currentPassword === pass ? null : {
+    return newPassword === confirmPassword && currentPassword === pass? null : {
       'Password' : 'Non working'
     }
   }
@@ -244,11 +249,11 @@ export class UserSettingsComponent implements OnInit {
       firstName: [''],
       lastName: [''],
       changeBirth: [''],
-      currentPassword: [''],
+      currentPassword: ['', Validators.required],
       newPassword: [''],
       confirmPassword: ['']
     }, {
-      validators: [this.changePasswordValidator, this.currentPasswordValidator]
+      validators: [this.changePasswordValidator]
     });
   }
 }

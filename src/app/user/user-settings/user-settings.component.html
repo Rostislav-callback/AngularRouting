@@ -110,7 +110,9 @@
                     <input type="password"
                            matInput
                            formControlName="currentPassword"
-                           (click)="changeStatePassword()">
+                           (click)="changeStatePassword()"
+                           (change)="changeState()"
+                           #passwordValue>
                     <mat-icon (click)="changeStatePassword()" matSuffix>create</mat-icon>
                 </mat-form-field>
             </div>
@@ -133,7 +135,7 @@
                 </mat-form-field>
             </div>
 
-            <mat-error *ngIf="userInfoForm.invalid && userInfoForm.dirty">
+            <mat-error *ngIf="userInfoForm.invalid && (isShowError$ | async)">
                 Password is not declare
             </mat-error>
 

@@ -11,7 +11,6 @@ export class SettingsDirective {
   @HostListener('document:click', ['$event'])
 	onClick(event: Event) {
 		if (!this.el.nativeElement.contains(event.target)) {
-      this.userService.isInputStateFalse();
       document.getElementById('first').style.visibility = 'hidden';
       document.getElementById('second').style.visibility = 'hidden';
       document.getElementById('birth').style.visibility = 'hidden';

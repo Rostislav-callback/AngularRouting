@@ -14,6 +14,7 @@ import { UserInfo } from '../../users.interface';
 })
 export class UserService {
   private isShowButtons$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private isShowError$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() {}
 
@@ -21,13 +22,24 @@ export class UserService {
     return this.isShowButtons$.asObservable()
   }
 
-  //change
-  isInputStateTrue() {
+  changeInputStateTrue() {
     this.isShowButtons$.next(true);
   }
 
-  isInputStateFalse() {
+  changeInputStateFalse() {
     this.isShowButtons$.next(false);
+  }
+
+  getErrorState(): Observable<boolean> {
+    return this.isShowError$.asObservable()
+  }
+
+  changeErrorStateTrue() {
+    this.isShowError$.next(true);
+  }
+
+  changeErrorStateFalse() {
+    this.isShowError$.next(false);
   }
 
   firstName(firstNameObject: FirstName) {
