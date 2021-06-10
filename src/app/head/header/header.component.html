@@ -1,0 +1,62 @@
+<mat-toolbar color="primary">
+    <form class="menu">
+        <ul class="menu_list">
+            <li class="menu_list-item">
+                <a routerLink="">Home</a>
+            </li>
+            <li class="menu_list-item">
+                <a routerLink="dashboard">Dashboard</a>
+            </li>
+            <li class="menu_list-item">
+                <a routerLink="about-us">About Us</a>
+            </li>
+            <li class="menu_log-item">
+                 <div class="button_log-in"
+                    [ngClass]="{'invis': isResponse$ | async}">
+                    <a routerLink="login">Log In</a>
+                </div>
+            </li>
+
+            <li class="menu_sign-item">
+                <div class="button_sign-up" 
+                    [ngClass]="{'invis': isResponse$ | async}">
+                    <a routerLink="signup">Sign Up</a>
+                </div>
+            
+                <div *ngIf="isResponse$ | async">
+                    <div class="menu-panel" mat-icon-button [matMenuTriggerFor]="menu">
+                        <div class="user_avatar-block">
+                            <div class="user_avatar">
+                                <div class="user_photo">
+                                    <img id="photo1" class="user_mini-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="arrow-down">
+                            <img src="../../../assets/Images/down-arrow.png" 
+                             width="15" 
+                                height="15"
+                                alt="нема">
+                        </div>
+                    </div>
+
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <span><a routerLink="profile">Your profile</a></span>
+                        </button>
+                        <button mat-menu-item>
+                            <span><a routerLink="home">Your home</a></span>
+                        </button>
+                        <button mat-menu-item>
+                            <span><a routerLink="settings">Edit profile</a></span>
+                        </button>
+                        <button mat-menu-item>
+                            <span><a (click)="logoutChange()" routerLink="login">Log Out</a></span>
+                        </button>
+                    </mat-menu>                   
+                </div>
+            </li>
+        </ul>
+    </form>
+</mat-toolbar>

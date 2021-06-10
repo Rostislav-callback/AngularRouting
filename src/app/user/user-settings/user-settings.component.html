@@ -1,0 +1,155 @@
+<div class="user_settings-content" hideButtons>
+    <form class="avatar-container">
+        <div class="user_avatar">
+            <img class="user_photo" id="photo">
+        </div>
+
+        <button class="download_photo"
+               type="button"
+               (click)="editUserPhotoButton()"> 
+               <img src="../../../assets/Images/editphotoprofile.png" height="15px" width="15px">
+               Edit</button>
+
+        <div class="buttons_accept-" *ngIf="isShowButtons$ | async" >
+            <button class="cancel_button" (click)="cancelButtonUploader()">
+                Cancel
+            </button>
+
+            <button class="confirm_button" (click)="saveButtonUploader()">
+                Save
+            </button>
+        </div>
+
+        <input type="file" 
+               style="display:none;" 
+               id="file" 
+               name="file"
+               (click)="setUserPhoto()"
+               #uploadPhoto>
+    </form>
+
+    <form class="user_settings-form"
+          [formGroup]="userInfoForm">
+        <div class="change_user-names">
+            <div class="user_names-conteiner">
+                <mat-form-field class="datapicker_style" appearance="fill" >
+                    <mat-label>First Name</mat-label>
+                    <input type="text" 
+                           matInput
+                           id="fname"
+                           (click)="changeStateFname()"
+                           placeholder="Enter your name"
+                           formControlName="firstName">
+                    <mat-icon (click)="changeStateFname()" matSuffix>create</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="accept_buttons" id="first" style="visibility: hidden;" #getNameBut>
+                <button class="cancel_button" (click)="cancelFirstNameButton()">
+                    Cancel
+                </button>
+
+                <button class="confirm_button" (click)="setFirstName()">
+                    Save
+                </button>
+            </div>
+
+            <div class="user_names-conteiner">
+                <mat-form-field class="datapicker_style" appearance="fill">
+                    <mat-label>Last Name</mat-label>
+                    <input type="text"
+                           matInput
+                           (click)="changeStateLastName()"
+                           formControlName="lastName">
+                           <mat-icon (click)="changeStateLastName()" matSuffix>create</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="accept_buttons" id="second" style="visibility: hidden;" #getSurnameBut>
+                <button class="cancel_button" (click)="cancelSurNameButton()">
+                    Cancel
+                </button>
+
+                <button class="confirm_button"
+                        (click)="setLastName()">
+                    Save
+                </button>
+            </div>
+        </div>
+
+        <div class="change_user-birthday--conteiner">
+            <div class="change_user-birthday">
+                <mat-form-field class="datapicker_style" appearance="fill">
+                    <mat-label>Choose your birth date</mat-label>
+                    <input formControlName="changeBirth"  
+                           matInput 
+                           [matDatepicker]="picker"
+                           (click)="changeStateBirthday()"
+                           readonly
+                           onfocus="this.removeAttribute('readonly')">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            
+                <div class="accept_buttons" id="birth" style="visibility: hidden;" #getBirthayBut>
+                    <button class="cancel_button" (click)="cancelBirthdayButton()">
+                        Cancel
+                    </button>
+
+                    <button class="confirm_button" (click)="setBirthday()">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="change_user-password">
+            <div class="change_user-password--conteiner">
+                <mat-form-field class="datapicker_style" appearance="fill" errorStateMatcher="false">
+                    <mat-label>Current Password</mat-label>
+                    <input type="password"
+                           matInput
+                           formControlName="currentPassword"
+                           (click)="changeStatePassword()"
+                           (change)="changeState()"
+                           #passwordValue>
+                    <mat-icon (click)="changeStatePassword()" matSuffix>create</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="change_user-password--conteiner">
+                <mat-form-field class="datapicker_style" appearance="fill" errorStateMatcher="false">
+                    <mat-label>New Password</mat-label>
+                    <input type="password"
+                           matInput
+                           formControlName="newPassword">
+                </mat-form-field>
+            </div>
+
+            <div class="change_user-password--conteiner">
+                <mat-form-field class="datapicker_style" appearance="fill">
+                    <mat-label>Confirm Password</mat-label>
+                    <input type="password" 
+                           matInput 
+                           formControlName="confirmPassword">
+                </mat-form-field>
+            </div>
+
+            <mat-error *ngIf="userInfoForm.invalid && (isShowError$ | async)">
+                Password is not declare
+            </mat-error>
+
+            <div class="accept_buttons" #getPasswordBut style="visibility: hidden;">
+                <button class="cancel_button" (click)="cancelPasswordButton()">
+                    Cancel
+                </button>
+
+                <button [disabled]="userInfoForm.invalid" class="confirm_button" (click)="setChangePassword()">
+                    Save
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--[style.visibility]="(isShowButtons$ | async)? 'visible' : 'hidden'"-->

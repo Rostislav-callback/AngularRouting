@@ -1,5 +1,6 @@
 .header {
-    max-height: 37px;
+    max-height: 40px;
+    height: 40px;
     border-bottom: 1px solid #000000;
 }
 
@@ -17,17 +18,11 @@ a:hover {
     color: rgb(94, 94, 94);
 }
 
-.menu{
-    height: 37px;
-    border-bottom: 1px solid #000000;
-}
-
 .menu_list{
     display: flex;
     margin-block-start: 0em;
     margin-block-end: 0em;
-    margin-left: 100px;
-    margin-top: 10px;
+    margin-left: 70px;
 }
 
 .menu_list-item{
@@ -41,7 +36,7 @@ a:hover {
 }
 
 .menu_log-item {
-    margin-left: 700px;
+    margin-left: 830px;
     cursor: pointer;
     margin-bottom: 1px;
 }
@@ -56,15 +51,15 @@ a:hover {
     margin-bottom: 1px;
 }
 
-.menu_sign-item:hover{
-    border-bottom: 2px solid #000000;
-
-}
-
 .button_sign-up {
     &.invis {
         display: none;
     }
+}
+
+.button_sign-up:hover{
+    border-bottom: 2px solid #000000;
+
 }
 
 .button_log-in {
@@ -72,3 +67,43 @@ a:hover {
         display: none;
     }
 }
+
+.menu-panel {
+    display: inline-flex;
+}
+
+.arrow-down {
+    position: absolute;
+    top: 20px;
+    right: 118px;
+    height: 10px;
+    width: 10px;
+}
+
+.user_avatar-block {
+    display: flex;
+    position: absolute;
+    top: 8px;
+    right: 85px;
+    height: 60px;
+    width: 90px;
+}
+
+.user_avatar {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    border: solid 1px #000;
+    margin-top: 6px;
+    margin-left: 6px;
+    position: relative;
+}
+
+.user_mini-photo {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}
+
+
+

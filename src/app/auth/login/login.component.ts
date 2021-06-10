@@ -5,8 +5,8 @@ import { Router } from "@angular/router";
 import { BehaviorSubject } from 'rxjs';
 import { Subscription } from 'rxjs';
 
-import { Login } from "./../interfaces/login.interface";
 import { AuthService } from '../services/auth.service';
+import { UserInfo } from '../../users.interface'
 
 @Component({
   selector: 'app-login',
@@ -53,9 +53,14 @@ export class LoginComponent implements OnInit {
   }
 
   confirmLoginData() {
-    const loginDataObject: Login = { 
+    const loginDataObject: UserInfo = { 
       "email": this.loginForm.value.email, 
-      "password": this.loginForm.value.password
+      "password": this.loginForm.value.password,
+      "firstName": "",
+      "surname": "",
+      "birthdayDate": "",
+      "userphoto": "",
+      "isAuth": false
     };
       
     this.authService.signin(loginDataObject);

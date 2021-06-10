@@ -1,0 +1,154 @@
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+// mat-input error carent color
+::ng-deep .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+    caret-color: rgba(0,0,0,.6)!important;
+}
+
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: rgba(0,0,0,.6)!important;
+}
+
+::ng-deep.mat-form-field.mat-form-field-invalid .mat-form-field-ripple{
+    background-color: rgba(0,0,0,.1)!important;
+}
+
+.avatar-container {
+    height: 300px;
+    width: 250px;
+    margin-left: 500px;
+    position: absolute;
+}
+
+.avatar {
+    margin-top: 50px;
+    margin-left: 50px;
+    width: 250px;
+
+}
+
+.user_avatar {
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    border: black solid 1px;
+    margin-top: 6px;
+    margin-left: 6px;
+    position: relative;
+}
+
+.user_photo {
+    position: relative;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+}
+
+
+
+.download_photo {
+    font-size: medium;
+    height: 35px;
+    border: none;
+    background-color: floralwhite;
+    border-radius: 5px;
+    bottom: 45px;
+    right: 160px;
+    z-index: 1000;
+    position: absolute;
+}
+
+.download_photo:hover {
+    background-color: rgb(235, 235, 235);
+    border: .5px solid #999;
+    color: #999;
+}
+
+.user_settings-content {
+    position: relative;
+    text-align: center;
+    margin-top: 55px;
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.datapicker_style {
+    height: 30px;
+    width: 300px;
+    border-radius: 5px;
+}
+
+.user_settings-form {
+    height: 400px;
+}
+
+.change_user-names {
+    padding-top: 50px;
+    padding-bottom: 25px;
+}
+
+.user_names--conteiner {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.change_user-password--conteiner {
+    padding-bottom: 10px;
+}
+
+.change_user-birthday {
+    padding-top: 30px;
+    padding-bottom: 25px;
+}
+
+.change_user-password {
+    padding-top: 25px;
+}
+
+.accept_buttons {
+    padding-top: 30px;
+    padding-bottom: 15px;
+}
+
+.cancel_button {
+    margin-right: 75px;
+    height: 30px;
+    width: 70px;
+    border-radius: 5px;
+}
+
+.cancel_button:hover {
+    background-color: rgb(235, 235, 235);
+    border: .5px solid #999;
+    color: #999;
+}
+
+.confirm_button {
+    height: 30px;
+    width: 70px;
+    border-radius: 5px;
+}
+
+.confirm_button:hover {
+    background-color: rgb(235, 235, 235);
+    border: .5px solid #999;
+    color: #999;
+}
+
+.mat_button{
+    margin-right: 200px;
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.mat_button:hover {
+    background-color: rgb(235, 235, 235);
+    border: .5px solid #999;
+    color: #999;
+}
