@@ -19,7 +19,7 @@ export class UserService {
   constructor() {}
 
   getInputState(): Observable<boolean> {
-    return this.isShowButtons$.asObservable()
+    return this.isShowButtons$.asObservable();
   }
 
   changeInputStateTrue() {
@@ -31,7 +31,7 @@ export class UserService {
   }
 
   getErrorState(): Observable<boolean> {
-    return this.isShowError$.asObservable()
+    return this.isShowError$.asObservable();
   }
 
   changeErrorStateTrue() {

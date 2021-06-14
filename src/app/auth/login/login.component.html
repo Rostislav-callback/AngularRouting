@@ -10,6 +10,8 @@
                     type="text"
                     matInput
                     formControlName="email"
+                    readonly
+                    onfocus="this.removeAttribute('readonly')"
                     (input)="changeState($event.target.value)">
             </mat-form-field>
                    
@@ -35,6 +37,8 @@
                 <input class="input_log" 
                     type="password" 
                     matInput
+                    readonly
+                    onfocus="this.removeAttribute('readonly')"
                     formControlName="password">
             </mat-form-field>
 

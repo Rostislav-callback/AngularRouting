@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RoutersModule } from './router.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,20 +48,12 @@ import { SettingsDirective } from './user/directives/settings.directive';
     MatInputModule,
     MatIconModule,
     MatToolbarModule,
-    RouterModule.forRoot([
-      {path: 'home', component: HomeComponent},
-      {path: 'dashboard', component: DashboardComponent},
-      {path: 'about-us', component: AboutUsComponent},
-      {path: 'login', component: LoginComponent},
-      {path: 'signup', component: SignupComponent},
-      {path: 'profile', component: UserProfileComponent},
-      {path: 'settings', component: UserSettingsComponent}
-    ]),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule, 
     ToastrModule.forRoot(),
+    RoutersModule,
     ToastContainerModule
   ],
   providers: [],

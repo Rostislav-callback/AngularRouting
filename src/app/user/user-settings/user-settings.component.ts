@@ -1,7 +1,7 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, Validators, ValidationErrors, FormBuilder} from '@angular/forms';
 
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 
 import { FirstName } from '../interfaces/username.interface';
 import { LastName } from '../interfaces/lastname.interface';
@@ -17,32 +17,38 @@ import { StorageService } from '../services/storage.service';
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.scss']
 })
-export class UserSettingsComponent implements OnInit {
+export class UserSettingsComponent implements OnInit, AfterViewInit {
   @ViewChild('uploadPhoto', {static: false}) uploadPhoto: ElementRef;
   @ViewChild('passwordValue', {static: false}) passwordValue: ElementRef;
-  @ViewChild('getNameBut', {static: true}) getNameBut: ElementRef;
-  @ViewChild('getSurnameBut', {static: true}) getSurnameBut: ElementRef;
-  @ViewChild('getBirthayBut', {static: true}) getBirthayBut: ElementRef;
-  @ViewChild('getPasswordBut', {static: true}) getPasswordBut: ElementRef;
+  @ViewChild('getNameBut', {static: false}) getNameBut: ElementRef;
+  @ViewChild('getSurnameBut', {static: false}) getSurnameBut: ElementRef;
+  @ViewChild('getBirthayBut', {static: false}) getBirthayBut: ElementRef;
+  @ViewChild('getPasswordBut', {static: false}) getPasswordBut: ElementRef;
+  @ViewChild('getPhoto', {static: false}) getPhoto: ElementRef;
 
   public userInfoForm: FormGroup;
   public getLname = JSON.parse(localStorage.getItem('lastname'));
 
   isShowButtons$: Observable<boolean>;
   isShowError$: Observable<boolean>;
+  avatar$: Subject<string>;
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
               private storageService: StorageService) {
+    this.avatar$ = this.storageService.avatar$;
   }
 
   ngOnInit(): void {
-    this.storageService.saveFinishedPhotoUrl();
     this.isShowButtons$ = this.userService.getInputState();
     this.isShowError$ = this.userService.getErrorState();
-    
+
     this.initForm();
     this.loadDataFromStore();
+  }
+
+  ngAfterViewInit(): void {
+    this.storageService.saveFinishedPhotoUrl(this.getPhoto.nativeElement);
   }
 
   loadDataFromStore() {
@@ -168,8 +174,8 @@ export class UserSettingsComponent implements OnInit {
 
     userPhoto.onchange = () => {
       const file = userPhoto.files[0];
-      this.uploadPhoto.nativeElement.value = '';
       const reader = new FileReader();
+      this.uploadPhoto.nativeElement.value = '';
 
       if (file) {
         reader.readAsDataURL(file);
@@ -179,7 +185,7 @@ export class UserSettingsComponent implements OnInit {
         localStorage.setItem('userphoto', JSON.stringify(event.target.result));
 
         if (avatar.hasAttribute('src')) {
-          this.storageService.saveDemoPhotoUrlOnUploader();
+          this.storageService.saveDemoPhotoUrlOnUploader(this.getPhoto.nativeElement);
         } 
       }
     }
@@ -187,38 +193,38 @@ export class UserSettingsComponent implements OnInit {
 
   editUserPhotoButton() {
     document.getElementById('file').click();
-    this.userService.changeInputStateTrue()
+    this.userService.changeInputStateTrue();
   }
 
   cancelButtonUploader() {
     const userObject = JSON.parse(localStorage.getItem('Users'));
-    const oldPhotoUrl = userObject.map(user => user.userphoto);
+    const authedUser = JSON.parse(localStorage.getItem('Auth User'));
 
-    localStorage.setItem('userphoto1', JSON.stringify(oldPhotoUrl[0]));
-    localStorage.setItem('userphoto2', JSON.stringify(oldPhotoUrl[0]));
-    this.storageService.savePhotoUrlOnCencelButton();
+    userObject.map(user => {
+      if (user.email.toLowerCase() === authedUser.toLowerCase()) {
+        localStorage.setItem('userphoto', JSON.stringify(user.userphoto));
+
+        this.userService.changeInputStateFalse();
+        this.storageService.savePhotoUrlOnCencelButton(this.getPhoto.nativeElement);
+      }
+    });
   }
 
   saveButtonUploader()  {
     const getUrl = JSON.parse(localStorage.getItem('userphoto'));
-
-    localStorage.setItem('userphoto2', JSON.stringify(getUrl));
 
     const changeFotoObject: UserPhoto = {
       "userphoto": getUrl
     };
 
     this.userService.changeFoto(changeFotoObject);
-    this.storageService.savePhotoUrlOnSaveButton();
+    this.storageService.savePhotoUrlOnSaveButton(this.getPhoto.nativeElement);
+    this.avatar$.next(getUrl);
     this.userService.changeInputStateFalse();
   }
 
   get currentPassword() {
     return this.userInfoForm.get('currentPassword');
-  }
-
-  get newPassword() {
-    return this.userInfoForm.get('newPassword');
   }
 
   get confirmPassword() {
@@ -230,8 +236,8 @@ export class UserSettingsComponent implements OnInit {
     let userData = this.passwordValue.nativeElement.value;
     if (userData === "" || this.userInfoForm.untouched || userData === pass) {
       this.userService.changeErrorStateFalse();
-    } else if (userData !== pass) {
-      this.userService.changeErrorStateTrue()
+    } else if (this.userInfoForm.touched || userData !== pass) {
+      this.userService.changeErrorStateTrue();
     }
   }
 

@@ -1,5 +1,5 @@
-<mat-toolbar color="primary">
-    <form class="menu">
+<mat-toolbar color="primary" >
+    <form class="menu" *ngIf="combine$ | async as data">
         <ul class="menu_list">
             <li class="menu_list-item">
                 <a routerLink="">Home</a>
@@ -12,23 +12,23 @@
             </li>
             <li class="menu_log-item">
                  <div class="button_log-in"
-                    [ngClass]="{'invis': isResponse$ | async}">
+                    [ngClass]="{'invis': data.isResponse}">
                     <a routerLink="login">Log In</a>
                 </div>
             </li>
 
             <li class="menu_sign-item">
                 <div class="button_sign-up" 
-                    [ngClass]="{'invis': isResponse$ | async}">
+                    [ngClass]="{'invis': data.isResponse}">
                     <a routerLink="signup">Sign Up</a>
                 </div>
             
-                <div *ngIf="isResponse$ | async">
+                <div *ngIf="data.isResponse">
                     <div class="menu-panel" mat-icon-button [matMenuTriggerFor]="menu">
                         <div class="user_avatar-block">
                             <div class="user_avatar">
                                 <div class="user_photo">
-                                    <img id="photo1" class="user_mini-photo">
+                                    <img class="user_mini-photo" [src]="data.avatar" #getPhoto>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                             <span><a routerLink="profile">Your profile</a></span>
                         </button>
                         <button mat-menu-item>
-                            <span><a routerLink="home">Your home</a></span>
+                            <span><a routerLink="home" (click)="addData()">Your home</a></span>
                         </button>
                         <button mat-menu-item>
                             <span><a routerLink="settings">Edit profile</a></span>
