@@ -40,6 +40,9 @@
     height: 30px;
     width: 70px;
     border-radius: 5px;
+    position: relative;
+    transition: .5s;
+    overflow: hidden;
 }
 
 .signup_button:hover {
@@ -47,16 +50,93 @@
     border: .5px solid #999;
 }
 
+.signup_button::before,
+.signup_button::after { 
+    position: absolute;
+    content: '';
+    width: 50px;
+    height: 50px;
+    background-color: rgba(94, 94, 94, 0.849);
+    box-shadow: white;
+    left: 23px;
+    border-radius: 50%;
+    bottom: -53px;
+    opacity: .3;
+    z-index: 1;
+    transition: .5s;
+}
+
+.signup_button:active::after {
+    animation-name: signup;
+    animation-duration: .2s;
+    transition: .5s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes signup {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 .cencel_button{
     margin-right: 26px;
     height: 30px;
     width: 70px;
     border-radius: 5px;
+    position: relative;
+    transition: .5s;
+    overflow: hidden;
 }
 
 .cencel_button:hover {
     background-color: rgb(235, 235, 235);
     border: .5px solid #999;
+}
+
+.cencel_button::before,
+.cencel_button::after { 
+    position: absolute;
+    content: '';
+    width: 50px;
+    height: 50px;
+    background-color: rgba(94, 94, 94, 0.849);
+    box-shadow: white;
+    left: 23px;
+    border-radius: 50%;
+    bottom: -53px;
+    opacity: .3;
+    z-index: 1;
+    transition: .5s;
+}
+
+.cencel_button:active::after {
+    animation-name: cencel;
+    animation-duration: .2s;
+    transition: .5s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes cencel {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 a {
@@ -90,4 +170,209 @@ a {
     text-align: left;
     padding-left: 25px;
     color: rgb(64, 253, 47);
+}
+
+@media (max-width: 2500px) {
+    .signup_content{
+        margin-top: 100px;
+        width: 500px;
+    }
+    
+    .signup_avtoriz {
+        height: 500px;
+        max-height: 500px;
+    }
+    
+    .signup_login{
+        padding-top: 70px;
+    }
+
+    .cencel_button{
+        margin-right: 150px;
+        height: 45px;
+        width: 100px;
+        font-size: 20px;
+    }
+    
+    .datapicker_style {
+        width: 500px;
+        border-radius: 10px;
+    }
+    
+    .input_log {
+        height: 40px;
+        width: 400px;
+        font-size: 30px;
+    }
+    
+    .signup_buttons {
+        padding-top: 60px;
+    }
+    
+    .signup_button{
+        height: 45px;
+        width: 100px;
+        font-size: 20px;
+    }
+
+    .label {
+        font-size: 21px;
+    }
+}
+
+@media (max-width: 1760px) {
+    .datapicker_style {
+        width: 350px;
+        border-radius: 5px;
+    }
+    
+    .input_log {
+        height: 35px;
+        width: 300px;
+        font-size: 25px;
+    }
+
+    .signup_buttons {
+        padding-top: 30px;
+    }
+
+    .signup_button{
+        height: 40px;
+        width: 80px;
+        font-size: 15px;
+    }
+
+    .cencel_button{
+        height: 40px;
+        width: 80px;
+        font-size: 15px;
+        margin-right: 90px;
+    }
+}
+
+@media (max-width: 1420px) {
+    .datapicker_style {
+        width: 350px;
+        border-radius: 5px;
+    }
+    
+    .input_log {
+        height: 35px;
+        width: 300px;
+        font-size: 25px;
+    }
+
+    .signup_buttons {
+        padding-top: 40px;
+    }
+
+    .cencel_button{
+        margin-right: 100px;
+    }
+}
+
+@media (max-width: 1224px) {
+    .datapicker_style {
+        width: 300px;
+        border-radius: 5px;
+    }
+    
+    .input_log {
+        height: 20px;
+        width: 300px;
+        font-size: 20px;
+    }
+
+    .signup_button{
+        height: 30px;
+        width: 70px;
+        font-size: 15px;
+        margin-left: 26px;
+    }
+
+    .cencel_button{
+        height: 30px;
+        width: 70px;
+        font-size: 15px;
+        margin-right: 26px;
+    }
+
+    .signup_buttons {
+        padding-top: 30px;
+    }
+
+    .label {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 1080px) {
+    .signup_content{
+        margin-top: 50px;
+    }
+    .datapicker_style {
+        width: 250px;
+    }
+
+    .signup_password {
+        padding-left: 100px;
+        height: 150px;
+        width: 300px;
+    }
+}
+
+@media (max-width: 640px) {
+    .signup_content {
+        width: 300px;
+    }
+
+    .signup_password {
+        padding-left: 0px;
+        height: 150px;
+        width: 300px;
+    }
+
+    .datapicker_style {
+        width: 200px;
+    }
+
+    .input_log {
+        height: 15px;
+        font-size: 15px;
+    }
+
+    .invalid_email-message {
+        padding-left: 50px;
+    }
+
+    .invalid_password-message {
+        padding-left: 50px;
+    }
+
+    .signup_buttons{
+        padding-top: 25px;
+    }
+
+    .signup_button{
+        height: 25px;
+        width: 60px;
+        font-size: 12px;
+    }
+
+    .cencel_button{
+        height: 25px;
+        width: 60px;
+    }
+}
+
+@media (max-width: 540px) {
+    .signup_content {
+        margin-top: 35px;
+    }
+}
+
+@media (max-width: 420px) {
+    .signup_content {
+        margin-top: 20px;
+    }
 }

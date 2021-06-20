@@ -7,15 +7,15 @@
         <button class="download_photo"
                type="button"
                (click)="editUserPhotoButton()"> 
-               <img src="../../../assets/Images/editphotoprofile.png" height="15px" width="15px">
+               <img class="arrow" src="../../../assets/Images/editphotoprofile.png" height="15px" width="15px">
                Edit</button>
 
-        <div class="buttons_accept-" *ngIf="isShowButtons$ | async" >
-            <button class="cancel_button" (click)="cancelButtonUploader()">
+        <div class="buttons_accept-uploader" *ngIf="isShowButtons$ | async" >
+            <button class="cancel_button cancel_animate-button" (click)="cancelButtonUploader()">
                 Cancel
             </button>
 
-            <button class="confirm_button" (click)="saveButtonUploader()">
+            <button class="confirm_button confirm_animate-button" (click)="saveButtonUploader()">
                 Save
             </button>
         </div>
@@ -35,6 +35,7 @@
                 <mat-form-field class="datapicker_style" appearance="fill" >
                     <mat-label>First Name</mat-label>
                     <input type="text" 
+                           class="input_log"
                            matInput
                            id="fname"
                            (click)="changeStateFname()"
@@ -45,11 +46,11 @@
             </div>
 
             <div class="accept_buttons ref" style="visibility: hidden;" #getNameBut>
-                <button class="cancel_button" (click)="cancelFirstNameButton()">
+                <button class="cancel_button cancel_animate-button" (click)="cancelFirstNameButton()">
                     Cancel
                 </button>
 
-                <button class="confirm_button" (click)="setFirstName()">
+                <button class="confirm_button confirm_animate-button" (click)="setFirstName()">
                     Save
                 </button>
             </div>
@@ -58,6 +59,7 @@
                 <mat-form-field class="datapicker_style" appearance="fill">
                     <mat-label>Last Name</mat-label>
                     <input type="text"
+                           class="input_log"
                            matInput
                            (click)="changeStateLastName()"
                            formControlName="lastName">
@@ -66,11 +68,11 @@
             </div>
 
             <div class="accept_buttons ref" style="visibility: hidden;" #getSurnameBut>
-                <button class="cancel_button" (click)="cancelSurNameButton()">
+                <button class="cancel_button cancel_animate-button" (click)="cancelSurNameButton()">
                     Cancel
                 </button>
 
-                <button class="confirm_button"
+                <button class="confirm_button confirm_animate-button"
                         (click)="setLastName()">
                     Save
                 </button>
@@ -82,6 +84,7 @@
                 <mat-form-field class="datapicker_style" appearance="fill">
                     <mat-label>Choose your birth date</mat-label>
                     <input formControlName="changeBirth"  
+                           class="input_log"
                            matInput 
                            [matDatepicker]="picker"
                            (click)="changeStateBirthday()"
@@ -92,11 +95,11 @@
                 </mat-form-field>
             
                 <div class="accept_buttons ref" style="visibility: hidden;" #getBirthayBut>
-                    <button class="cancel_button" (click)="cancelBirthdayButton()">
+                    <button class="cancel_button cancel_animate-button" (click)="cancelBirthdayButton()">
                         Cancel
                     </button>
 
-                    <button class="confirm_button" (click)="setBirthday()">
+                    <button class="confirm_button confirm_animate-button" (click)="setBirthday()">
                         Save
                     </button>
                 </div>
@@ -108,6 +111,7 @@
                 <mat-form-field class="datapicker_style" appearance="fill" errorStateMatcher="false">
                     <mat-label>Current Password</mat-label>
                     <input type="password"
+                           class="input_log"
                            matInput
                            formControlName="currentPassword"
                            (click)="changeStatePassword()"
@@ -121,6 +125,7 @@
                 <mat-form-field class="datapicker_style" appearance="fill" errorStateMatcher="false">
                     <mat-label>New Password</mat-label>
                     <input type="password"
+                           class="input_log"
                            matInput
                            formControlName="newPassword">
                 </mat-form-field>
@@ -130,6 +135,7 @@
                 <mat-form-field class="datapicker_style" appearance="fill">
                     <mat-label>Confirm Password</mat-label>
                     <input type="password" 
+                           class="input_log"
                            matInput 
                            formControlName="confirmPassword">
                 </mat-form-field>
@@ -140,11 +146,11 @@
             </mat-error>
 
             <div class="accept_buttons ref" #getPasswordBut style="visibility: hidden;">
-                <button class="cancel_button" (click)="cancelPasswordButton()">
+                <button class="cancel_button cancel_animate-button" (click)="cancelPasswordButton()">
                     Cancel
                 </button>
 
-                <button [disabled]="userInfoForm.invalid" class="confirm_button" (click)="setChangePassword()">
+                <button [disabled]="userInfoForm.invalid" class="confirm_button confirm_animate-button" (click)="setChangePassword()">
                     Save
                 </button>
             </div>

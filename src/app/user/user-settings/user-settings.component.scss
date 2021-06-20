@@ -27,7 +27,6 @@ a {
     margin-top: 50px;
     margin-left: 50px;
     width: 250px;
-
 }
 
 .user_avatar {
@@ -119,6 +118,9 @@ a {
     height: 30px;
     width: 70px;
     border-radius: 5px;
+    position: relative;
+    transition: .3s;
+    overflow: hidden;
 }
 
 .cancel_button:hover {
@@ -127,16 +129,91 @@ a {
     color: #999;
 }
 
+.cancel_animate-button::before,
+.cancel_animate-button::after { 
+    position: absolute;
+    content: '';
+    width: 50px;
+    height: 50px;
+    background-color: rgba(94, 94, 94, 0.849);
+    box-shadow: white;
+    left: 23px;
+    border-radius: 50%;
+    bottom: -53px;
+    opacity: .3;
+    z-index: 1;
+}
+
+.cancel_animate-button:active::after {
+    animation-name: cancel;
+    animation-duration: .2s;
+    transition: .5s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes cancel {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 .confirm_button {
     height: 30px;
     width: 70px;
     border-radius: 5px;
+    position: relative;
+    transition: .3s;
+    overflow: hidden;
 }
 
 .confirm_button:hover {
     background-color: rgb(235, 235, 235);
     border: .5px solid #999;
     color: #999;
+}
+
+.confirm_animate-button::before,
+.confirm_animate-button::after { 
+    position: absolute;
+    content: '';
+    width: 50px;
+    height: 50px;
+    background-color: rgba(94, 94, 94, 0.849);
+    box-shadow: white;
+    left: 23px;
+    border-radius: 50%;
+    bottom: -53px;
+    opacity: .3;
+    z-index: 1;
+}
+
+.confirm_animate-button:active::after {
+    animation-name: confirm;
+    animation-duration: .2s;
+    transition: .5s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes confirm {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .mat_button{
@@ -151,4 +228,344 @@ a {
     background-color: rgb(235, 235, 235);
     border: .5px solid #999;
     color: #999;
+}
+
+@media (max-width: 2500px) {
+    .user_settings-content {
+        margin-top: 100px;
+    }
+
+    .datapicker_style {
+        width: 350px;
+    }
+
+    .input_log {
+        width: 350px;
+        height: 30px;
+        font-size: 20px;
+    }
+
+    .avatar-container {
+        margin-left: 700px;
+        width: 350px;
+        height: 350px;
+    }
+
+    .user_avatar {
+        height: 300px;
+        width: 300px;
+    }
+    
+    .user_photo {
+        width: 300px;
+        height: 300px;
+    }
+
+    .download_photo {
+        font-size: large;
+        width: 65px;
+        height: 45px;
+        bottom: 60px;
+        right: 250px;
+    }
+
+    .accept_buttons {
+        padding-top: 40px;
+        padding-bottom: 20px;
+    }
+    
+    .cancel_button {
+        margin-right: 100px;
+        height: 40px;
+        width: 80px;
+        font-size: 20px;
+    }
+
+    .confirm_button {
+        height: 40px;
+        width: 80px;
+        font-size: 20px;
+    }
+
+    .buttons_accept-uploader {
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+    .label {
+        font-size: 21px !important;
+    }
+}
+
+@media (max-width: 2080px) {
+    .avatar-container {
+        margin-left: 600px;
+    }
+
+    .cancel_button {
+        height: 35px;
+        width: 70px;
+        font-size: 16px;
+    }
+
+    .confirm_button {
+        height: 35px;
+        width: 70px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 1760px) {
+    .avatar-container {
+        margin-left: 550px;
+    }
+}
+
+@media (max-width: 1660px) {
+    .buttons_accept-uploader {
+        margin-right: 50px;
+    }
+
+    .user_avatar {
+        height: 250px;
+        width: 250px;
+    }
+    
+    .user_photo {
+        width: 250px;
+        height: 250px;
+    }
+
+    .download_photo {
+        font-size: large;
+        width: 70px;
+        height: 40px;
+        bottom: 100px;
+    }
+
+    .cancel_button {
+        height: 30px;
+    }
+
+    .confirm_button {
+        height: 30px;
+    }
+}
+
+@media (max-width: 1420px) {
+    .avatar-container {
+        margin-left: 480px;
+        width: 300px;
+    }
+
+    .datapicker_style {
+        width: 300px;
+    }
+
+    .input_log {
+        width: 300px;
+        height: 25px;
+        font-size: 17px;
+    }
+
+    .download_photo {
+        bottom: 110px;
+        right: 230px;
+    }
+}
+
+@media (max-width: 1224px) {
+    .avatar-container {
+        margin-left: 425px;
+        width: 250px;
+    }
+
+    .download_photo {
+        top: 200px;
+        right: 180px;
+    }
+
+    .buttons_accept-uploader {
+       margin-right: 0px;
+    }
+}
+
+@media (max-width: 1080px) {
+    .avatar-container {
+        margin-left: 400px;
+        width: 230px;
+    }
+
+    .datapicker_style {
+        width: 250px;
+    }
+
+    .user_avatar {
+        height: 230px;
+        width: 230px;
+    }
+
+    .user_photo {
+        width: 230px;
+        height: 230px;
+    }
+
+    .download_photo {
+        top: 200px;
+        right: 150px;
+    }
+
+    .cancel_button {
+        margin-right: 50px;
+    }
+}
+
+@media (max-width: 996px) {
+    .avatar-container {
+        margin-left: 375px;
+    }
+
+    .datapicker_style {
+        width: 235px;
+    }
+
+    .user_avatar {
+        height: 210px;
+        width: 210px;
+    }
+
+    .user_photo {
+        width: 210px;
+        height: 210px;
+    }
+
+    .download_photo {
+        top: 180px;
+    }
+}
+
+@media (max-width: 920px) {
+    .change_user-names {
+        padding-top: 300px;
+    }
+
+    .avatar-container {
+        margin-left: 60px;
+    }
+}
+
+@media (max-width: 540px) {
+    .datapicker_style {
+        width: 210px;
+    }
+
+    .avatar-container {
+        margin-left: 65px;
+    }
+
+    .user_avatar {
+        height: 200px;
+        width: 200px;
+    }
+
+    .user_photo {
+        width: 200px;
+        height: 200px;
+    }
+
+    .download_photo {
+        top: 170px;
+    }
+
+    .cancel_button {
+        font-size: 12px;
+        height: 25px;
+        width: 60px;
+    }
+    
+    .confirm_button {
+        font-size: 12px;
+        height: 25px;
+        width: 60px;
+    }
+}
+
+@media (max-width: 440px) {
+    .avatar-container {
+        margin-left: 5%;
+        width: 350px;
+        right: 0;
+        left: 0;
+    }
+
+    .user_avatar {
+        height: 200px;
+        width: 200px;
+        margin: 0 15%;
+    }
+
+    .user_photo {
+        width: 200px;
+        height: 200px;
+    }
+
+    .download_photo {
+        right: 230px;
+        bottom: 100px;
+        height: 30px;
+    }
+
+    .datapicker_style {
+        height: 20px;
+        width: 200px;
+        border-radius: 5px;
+    }
+
+    .buttons_accept-uploader {
+        margin-top: 10px;
+        margin-right: 10%;
+    }
+}
+
+@media (max-width: 380px) {
+    .avatar-container {
+        margin-left: 0;
+        width: 290px;
+        right: 0;
+        left: 9%;
+    }
+
+    .download_photo {
+        top: 150px;
+        right: 200px;
+        bottom: 100px;
+        height: 30px;
+    }
+
+    .change_user-names {
+        padding-top: 270px;
+    }
+
+    .user_avatar {
+        height: 180px;
+        width: 180px;
+        padding: 0 auto;
+    }
+
+    .user_photo {
+        width: 180px;
+        height: 180px;
+    }
+
+    .cancel_button {
+        margin-right: 50px;
+    }
+
+    .user_settings-content {
+        width: 100%;
+    }
+
+    .buttons_accept-uploader {
+        margin-top: 25px;
+    }
 }

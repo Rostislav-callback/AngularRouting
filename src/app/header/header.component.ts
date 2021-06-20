@@ -4,8 +4,8 @@ import { BehaviorSubject, Subject, combineLatest, Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 
 
-import { AuthService } from '../../auth/services/auth.service';
-import { StorageService } from '../../user/services/storage.service';
+import { AuthService } from '../auth/services/auth.service';
+import { StorageService } from '../user/services/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +25,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
               private storageService: StorageService) {
     this.isResponse$ = this.authService.isResponse$;
     this.avatar$ = this.storageService.avatar$;
+    this.authCheck();
+    this.photoCheck();
   }
 
   public logoutChange() {
@@ -38,14 +40,20 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     
     if (auth === true) {
       this.isResponse$.next(true);
+      console.log(this.isResponse$);
     } else {
       this.isResponse$.next(false);
+      console.log(this.isResponse$);
     }
   }
 
+  photoCheck() {
+    const photo = JSON.parse(localStorage.getItem('userphoto'));
+    this.avatar$.next(photo);
+    console.log(this.avatar$);
+  }
+
   ngOnInit(): void {
-    this.authCheck();
-    
     this.combine$ = combineLatest([this.isResponse$, this.avatar$])
       .pipe(
         map(([isResponse, avatar]) => {
@@ -57,7 +65,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const photo = JSON.parse(localStorage.getItem('userphoto'));
-    this.avatar$.next(photo);
+    this.photoCheck();
+    this.authCheck();
   }
 }
